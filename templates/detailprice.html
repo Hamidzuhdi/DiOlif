@@ -1,0 +1,59 @@
+<!-- <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detail Harga Customer</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 40px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 18px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+    th { background: #2979ff; color: #fff; }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <h2 id="title">Detail Harga Customer</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nama Customer</th>
+        <th>Jenis Seragam</th>
+        <th>Deskripsi</th>
+        <th>Harga (Rp)</th>
+        <th>Ukuran</th>
+        <th>Catatan</th>
+      </tr>
+    </thead>
+    <tbody id="priceBody">
+      <tr><td colspan="6" style="text-align:center;color:#aaa;">Memuat data...</td></tr>
+    </tbody>
+  </table>
+  <script>
+    const customerId = window.location.pathname.split('/').pop();
+    fetch('/api/view-prices?customer_id=' + customerId)
+      .then(res => res.json())
+      .then(prices => {
+        const tbody = document.getElementById('priceBody');
+        tbody.innerHTML = '';
+        if (!prices.length) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#aaa;">Tidak ada data harga</td></tr>';
+          return;
+        }
+        // Set judul dengan nama customer dari data pertama
+        document.getElementById('title').textContent = 'Daftar Harga untuk ' + (prices[0].customer_name || '-');
+        prices.forEach(p => {
+          tbody.innerHTML += `
+            <tr>
+              <td>${p.customer_name || '-'}</td>
+              <td>${p.uniform_type_name || '-'}</td>
+              <td>${p.description || '-'}</td>
+              <td>Rp ${parseInt(p.price).toLocaleString('id-ID')}</td>
+              <td>${p.size}</td>
+              <td>${p.notes || '-'}</td>
+            </tr>
+          `;
+        });
+      });
+  </script>
+</body>
+</html> -->

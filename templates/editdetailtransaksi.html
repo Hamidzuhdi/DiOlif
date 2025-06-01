@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Item Pesanan</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 40px; }
+    .form-container { background: #fff; padding: 30px; border-radius: 8px; max-width: 800px; margin: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.1);}
+    table { width: 100%; border-collapse: collapse; margin-bottom: 18px; background: #fff; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+    th { background: #2979ff; color: #fff; }
+    .btn { padding: 6px 14px; border-radius: 4px; border: none; cursor: pointer; }
+    .btn-add { background: #2979ff; color: #fff; }
+    .btn-del { background: #ff4d4f; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Edit Item Pesanan</h2>
+    <h2>ss</h2>
+    <form id="orderItemsForm">
+      <table>
+        <thead>
+          <tr>
+            <th>Jenis Seragam</th>
+            <th>Ukuran</th>
+            <th>Jumlah</th>
+            <th>Harga Satuan</th>
+            <th>Subtotal</th>
+            <th>Catatan</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+      <button type="button" class="btn btn-add" onclick="addItemRow()">Tambah Item</button>
+      <button type="submit" class="btn btn-add">Simpan Perubahan</button>
+      <a href="/transactions" style="margin-left:10px;">Kembali</a>
+    </form>
+    <div id="responseMessage" style="margin-top:15px;"></div>
+  </div>
+  <script>
+  const id = window.location.pathname.split('/').pop();
+  let uniformList = [];
+  let allowedUniforms = [];
+
+  // Ambil data transaksi untuk dapatkan customer_id dan order items
+  fetch('/api/transactions/normal/' + id)
+    .then(res => res.json())
+    .then(trx => {
+      // Ambil daftar seragam milik customer ini
+      fetch('/api/customers/' + trx.customer_id + '/uniforms')
+        .then(res => res.json())
+        .then(uniforms => {
+          uniformList = uniforms;
+          allowedUniforms = [...new Set(uniforms.map(u => u.uniform_name))];
+          renderItems(trx.items);
+        });
+    });
+
+  function renderItems(items) {
+    const tbody = document.getElementById('itemsBody');
+    tbody.innerHTML = '';
+    items.forEach((item, idx) => {
+      tbody.appendChild(makeRow(item, idx));
+    });
+  }
+
+  function makeRow(item = {}, idx = 0) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <select name="uniform_name" class="uniform_name" required>
+          <option value="">Pilih</option>
+          ${allowedUniforms.map(name => `<option value="${name}" ${item.uniform_name==name?'selected':''}>${name}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <select name="size" class="size" required>
+          <option value="">Pilih Ukuran</option>
+        </select>
+      </td>
+      <td><input type="number" name="quantity" class="quantity" value="${item.quantity||1}" min="1" required></td>
+      <td><input type="number" name="unit_price" class="unit_price" value="${item.unit_price||0}" min="0" readonly required></td>
+      <td><input type="number" name="subtotal" class="subtotal" value="${item.subtotal||0}" readonly style="background:#f3f3f3;"></td>
+      <td><input type="text" name="notes" value="${item.notes||''}"></td>
+      <td>
+        <button type="button" class="btn btn-del" onclick="this.closest('tr').remove()">Hapus</button>
+      </td>
+    `;
+    setTimeout(() => {
+      const uniformSelect = tr.querySelector('.uniform_name');
+      const sizeSelect = tr.querySelector('.size');
+      const unitPriceInput = tr.querySelector('.unit_price');
+      const quantityInput = tr.querySelector('.quantity');
+      const subtotalInput = tr.querySelector('.subtotal');
+
+      // Populate size jika uniform_name sudah ada
+      if (item.uniform_name) {
+        populateSizeOptions(sizeSelect, item.uniform_name, item.size);
+        // Set harga satuan jika size juga sudah ada
+        if (item.size) {
+          const uniform = uniformList.find(u => u.uniform_name == item.uniform_name && u.size == item.size);
+          if (uniform) {
+            unitPriceInput.value = uniform.price;
+            unitPriceInput.readOnly = true;
+            subtotalInput.value = (item.quantity||1) * uniform.price;
+          }
+        }
+      }
+
+      // Event: Jika seragam berubah, populate size
+      uniformSelect.addEventListener('change', function() {
+        populateSizeOptions(sizeSelect, this.value, null);
+        unitPriceInput.value = '';
+        subtotalInput.value = '';
+      });
+
+      // Event: Jika size berubah, set harga satuan
+      sizeSelect.addEventListener('change', function() {
+        const uniform = uniformList.find(u => u.uniform_name == uniformSelect.value && u.size == this.value);
+        if (uniform) {
+          unitPriceInput.value = uniform.price;
+          unitPriceInput.readOnly = true;
+          subtotalInput.value = quantityInput.value * uniform.price;
+        } else {
+          unitPriceInput.value = '';
+          subtotalInput.value = '';
+        }
+      });
+
+      // Event: Jika jumlah berubah, update subtotal
+      quantityInput.addEventListener('input', function() {
+        if (unitPriceInput.value) {
+          subtotalInput.value = this.value * unitPriceInput.value;
+        }
+      });
+    }, 0);
+
+    return tr;
+  }
+
+  function populateSizeOptions(sizeSelect, uniformName, selectedSize) {
+    sizeSelect.innerHTML = '<option value="">Pilih Ukuran</option>';
+    if (!uniformName) return;
+    // Filter size yang tersedia untuk seragam ini
+    const sizes = uniformList.filter(u => u.uniform_name == uniformName).map(u => u.size);
+    sizes.forEach(size => {
+      const opt = document.createElement('option');
+      opt.value = size;
+      opt.textContent = size;
+      if (selectedSize && selectedSize == size) opt.selected = true;
+      sizeSelect.appendChild(opt);
+    });
+    sizeSelect.disabled = false;
+  }
+
+  function addItemRow() {
+    document.getElementById('itemsBody').appendChild(makeRow());
+  }
+
+  document.getElementById('orderItemsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const rows = Array.from(document.querySelectorAll('#itemsBody tr'));
+    const items = rows.map(row => {
+      const uniformName = row.querySelector('.uniform_name').value;
+      const size = row.querySelector('.size').value;
+      const quantity = parseInt(row.querySelector('.quantity').value);
+      const unitPrice = parseFloat(row.querySelector('.unit_price').value);
+      const notes = row.querySelector('input[name="notes"]').value;
+      return {
+        uniform_name: uniformName,
+        size: size,
+        quantity: quantity,
+        unit_price: unitPrice,
+        notes: notes
+      };
+    });
+    fetch('/api/transactions/normal/' + id + '/order-items', {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ items })
+    })
+    .then(async res => {
+      const msg = document.getElementById('responseMessage');
+      if (res.ok) {
+        msg.innerHTML = '<span style="color:green;">Item pesanan berhasil diupdate!</span>';
+        setTimeout(() => { window.location.href = '/transaction-detail/' + id; }, 1000);
+      } else {
+        const err = await res.text();
+        msg.innerHTML = '<span style="color:red;">Gagal: ' + err + '</span>';
+      }
+    });
+  });
+  </script>
+</body>
+</html>

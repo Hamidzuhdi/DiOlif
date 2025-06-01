@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Detail Transaksi Student Order</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 40px; }
+    .container { background: #fff; padding: 30px; border-radius: 8px; max-width: 900px; margin: auto; box-shadow: 0 1px 4px rgba(0,0,0,0.1);}
+    table { width: 100%; border-collapse: collapse; margin-top: 18px; background: #fff; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid #eee; }
+    th { background: #2979ff; color: #fff; }
+    .info-row { margin-bottom: 10px; }
+    .info-row label { font-weight: bold; margin-right: 10px; }
+    .btn { padding: 6px 14px; border-radius: 4px; border: none; cursor: pointer; }
+    .btn-edit { background: #ffc107; color: #222; }
+    .btn-back { background: #2979ff; color: #fff; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Detail Transaksi Student Order</h2>
+    <div class="info-row">
+      <label>Pelanggan:</label> <span id="customerName"></span>
+    </div>
+    <div class="info-row">
+      <label>Tanggal Transaksi:</label> <span id="transactionDate"></span>
+      <label style="margin-left:30px;">Deadline Pembayaran:</label> <span id="paymentDate"></span>
+      <label style="margin-left:30px;">Status:</label>
+      <span id="status"></span>
+      <select id="statusSelect" style="margin-left:10px;display:none;"></select>
+      <button id="saveStatusBtn" style="display:none;margin-left:10px;">Simpan</button>
+      <button id="editStatusBtn" style="margin-left:10px;">Edit Status</button>
+    </div>
+    <div class="info-row">
+      <label>Catatan:</label> <span id="notes"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Nama Siswa</th>
+          <th>Kelas</th>
+          <th>Jenis Seragam</th>
+          <th>Ukuran</th>
+          <th>Jumlah</th>
+          <th>Harga Satuan</th>
+          <th>Subtotal</th>
+          <th>Catatan</th>
+        </tr>
+      </thead>
+      <tbody id="itemsBody"></tbody>
+    </table>
+    <div id="summarySeragam" style="margin-top:18px;font-weight:bold;"></div>
+    <div style="margin-top:18px;">
+      <button class="btn btn-edit" id="editBtn">Edit Item Pesanan</button>
+      <a href="/repeat-order" class="btn btn-back" style="margin-left:10px;">Kembali</a>
+    </div>
+  </div>
+  <script>
+    const id = window.location.pathname.split('/').pop();
+    let currentStatus = '';
+
+    function renderStatusDropdown(status) {
+      const select = document.getElementById('statusSelect');
+      select.innerHTML = '';
+      let options = [];
+      if (status === 'pending') options = ['paid', 'cancelled'];
+      else if (status === 'paid') options = ['pending', 'cancelled'];
+      else if (status === 'cancelled') options = ['pending', 'paid'];
+      options.forEach(opt => {
+        const o = document.createElement('option');
+        o.value = opt;
+        o.textContent = opt.charAt(0).toUpperCase() + opt.slice(1);
+        select.appendChild(o);
+      });
+    }
+
+    fetch('/api/transactions/student/' + id)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('Transaksi tidak ditemukan atau server error');
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (!data.transaction) {
+          alert('Transaksi tidak ditemukan!');
+          window.location.href = '/repeat-order';
+          return;
+        }
+        const trx = data.transaction;
+        const items = data.items;
+        document.getElementById('customerName').textContent = trx.customer_name || '-';
+        document.getElementById('transactionDate').textContent = trx.transaction_date ? trx.transaction_date.substring(0,10) : '-';
+        document.getElementById('paymentDate').textContent = trx.payment_date ? trx.payment_date.substring(0,10) : '-';
+        document.getElementById('status').textContent = trx.status || '-';
+        document.getElementById('notes').textContent = trx.notes || '-';
+        currentStatus = trx.status || 'pending';
+        renderStatusDropdown(currentStatus);
+
+        // Render tabel siswa
+        const tbody = document.getElementById('itemsBody');
+        tbody.innerHTML = '';
+        (items || []).forEach(item => {
+          const subtotal = (item.unit_price || 0) * (item.quantity || 0);
+          tbody.innerHTML += `
+            <tr>
+              <td>${item.student_name || '-'}</td>
+              <td>${item.grade || '-'}</td>
+              <td>${item.uniform_name || '-'}</td>
+              <td>${item.size || '-'}</td>
+              <td>${item.quantity || 0}</td>
+              <td>${item.unit_price ? item.unit_price.toLocaleString('id-ID') : 0}</td>
+              <td>${subtotal ? subtotal.toLocaleString('id-ID') : 0}</td>
+              <td>${item.notes || ''}</td>
+            </tr>
+          `;
+        });
+
+        // Resume seragam
+        const summary = {};
+        (items || []).forEach(item => {
+          if (!item.uniform_name) return;
+          if (!summary[item.uniform_name]) summary[item.uniform_name] = 0;
+          summary[item.uniform_name] += item.quantity || 0;
+        });
+        let summaryText = 'Resume seragam: ';
+        if (Object.keys(summary).length === 0) {
+          summaryText += '-';
+        } else {
+          summaryText += Object.entries(summary)
+            .map(([nama, qty]) => `${nama} = ${qty}`)
+            .join(', ');
+        }
+        document.getElementById('summarySeragam').textContent = summaryText;
+      })
+      .catch(err => {
+        alert(err.message);
+        window.location.href = '/repeat-order';
+      });
+
+    document.getElementById('editStatusBtn').onclick = function() {
+      document.getElementById('statusSelect').style.display = '';
+      document.getElementById('saveStatusBtn').style.display = '';
+      this.style.display = 'none';
+      document.getElementById('statusSelect').value = '';
+    };
+
+    document.getElementById('saveStatusBtn').onclick = function() {
+      const newStatus = document.getElementById('statusSelect').value;
+      if (!newStatus) {
+        alert('Pilih status baru!');
+        return;
+      }
+      fetch('/api/transactions/' + id + '/status', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ status: newStatus })
+      })
+      .then(res => {
+        if (res.ok) {
+          document.getElementById('status').textContent = newStatus;
+          currentStatus = newStatus;
+          renderStatusDropdown(currentStatus);
+          document.getElementById('statusSelect').style.display = 'none';
+          document.getElementById('saveStatusBtn').style.display = 'none';
+          document.getElementById('editStatusBtn').style.display = '';
+          alert('Status berhasil diupdate!');
+        } else {
+          alert('Gagal update status');
+        }
+      });
+    };
+
+    document.getElementById('editBtn').onclick = function() {
+      window.location.href = '/editdetailrepeat/' + id;
+    };
+  </script>
+</body>
+</html>

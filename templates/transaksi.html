@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manajemen Transaksi - Konveksi</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background: #f9f9f9;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #2f44c4;
+      color: white;
+      padding-top: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 20px;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 15px 25px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .sidebar a.active {
+      background-color: #536dfe;
+      border-left: 6px solid #ffc107;
+    }
+
+    .sidebar a:hover {
+      background-color: #4d60e2;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #2979ff;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .logout-btn {
+      background-color: #ff4d4f;
+      border: none;
+      padding: 8px 16px;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 30px;
+    }
+
+    .content h2 {
+      margin-bottom: 20px;
+    }
+
+    .actions {
+      margin-bottom: 15px;
+    }
+
+    .actions button {
+      padding: 6px 12px;
+      border: 1px solid #333;
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+
+    .actions input, .actions select {
+      padding: 6px;
+      margin-left: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    table thead {
+      background-color: #f1f3f4;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Konveksi Internal System</h2>
+    <a href="/dashboard">Dashboard</a>
+    <a href="/customers">Manajemen Pelanggan</a>
+    <a href="#" class="active">Manajemen Transaksi</a>
+    
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <form action="/logout" method="POST" style="margin:0;">
+        <button class="logout-btn" type="submit">Logout</button>
+      </form>
+    </div>
+
+    <div class="content">
+      <h2>Manajemen Transaksi</h2>
+
+      <div class="actions">
+        <button><a href="/transaction-form">Buat Transaksi Baru</a></button>
+        <button id="btnRepeatOrder" style="background:#ffc107;color:#222;">Transaksi Kelas Atas</button>
+        Cari Pelanggan:
+        <input type="text" placeholder="Nama pelanggan...">
+      </div>
+      <div class="filter">
+        <label for="tipe">Tipe:</label>
+        <select id="tipe">
+          Filter Status:
+          <option value="semua"> None </option>
+          <option value="pending">Belum Bayar</option>
+          <option value="cancelled">Batal</option>
+          <option value="paid">Selesai</option>
+        </select>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pelanggan</th>
+            <th>Deadline</th>
+            <th>Pembayaran Maks.</th>
+            <th>Status</th>
+            <th>Total Harga (Rp)</th>
+            <th>Catatan</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data transaksi akan diisi di sini -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <div id="pdfModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:9999;justify-content:center;align-items:center;">
+  <div style="background:#fff;padding:20px;max-width:90vw;max-height:90vh;overflow:auto;position:relative;">
+    <button onclick="closePdfModal()" style="position:absolute;top:10px;right:10px;">Tutup</button>
+    <a id="downloadPdfBtn" href="#" download="kuitansi.pdf" target="_blank" style="margin-bottom:10px;display:inline-block;">Download PDF</a>
+    <div style="width:80vw;height:80vh;">
+      <iframe id="pdfFrame" style="width:100%;height:100%;" frameborder="0"></iframe>
+    </div>
+  </div>
+</div>
+  <script>
+  document.getElementById('btnRepeatOrder').onclick = function() {
+    window.location.href = '/repeat-order';
+  };
+document.addEventListener('DOMContentLoaded', function() {
+  let allTransactions = [];
+
+  // Fetch data transaksi sekali saja
+  fetch('/api/transactions/order')
+    .then(res => res.json())
+    .then(transactions => {
+      allTransactions = transactions;
+      renderTable(transactions);
+    });
+
+  // Render tabel transaksi
+  function renderTable(data) {
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = '';
+    data.forEach(trx => {
+      const total = trx.total ? trx.total.toLocaleString('id-ID') : '0';
+      tbody.innerHTML += `
+        <tr>
+          <td>${trx.customer_name || '-'}</td>
+          <td>${trx.transaction_date ? trx.transaction_date.substring(0,10) : '-'}</td>
+          <td>${trx.payment_date ? trx.payment_date.substring(0,10) : '-'}</td>
+          <td>${trx.status || '-'}</td>
+          <td>${total}</td>
+          <td>${trx.notes || '-'}</td>
+          <td>
+  <button onclick="viewTransaction(${trx.id})">Detail</button>
+  <button onclick="editTransaction(${trx.id})" style="background:#ffc107;color:#222;">Edit Item</button>
+  <button onclick="deleteTransaction(${trx.id})" style="background:#ff4d4f;color:white;">Hapus</button>
+  <button class="btn" style="background:#4caf50;color:#fff;" onclick="previewKuitansi(${trx.id})">Print Kuitansi</button>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  // Filter status
+  document.getElementById('tipe').addEventListener('change', function() {
+    const tipe = this.value;
+    let filtered = allTransactions;
+    if (tipe !== 'semua') {
+      filtered = allTransactions.filter(t => t.status === tipe);
+    }
+    renderTable(filtered);
+  });
+});
+
+// Fungsi hapus transaksi
+function deleteTransaction(id) {
+  if (!confirm('Yakin ingin menghapus transaksi ini?')) return;
+  fetch('/api/transactions/' + id, { method: 'DELETE' })
+    .then(res => {
+      if (res.ok) location.reload();
+      else alert('Gagal menghapus transaksi');
+    });
+}
+
+function viewTransaction(id) {
+  window.location.href = '/transaction-detail/' + id;
+}
+function editTransaction(id) {
+  window.location.href = '/edit-transaksi/' + id;
+}
+function previewKuitansi(id) {
+  const modal = document.getElementById('pdfModal');
+  const frame = document.getElementById('pdfFrame');
+  const downloadBtn = document.getElementById('downloadPdfBtn');
+  // URL endpoint backend yang generate PDF kuitansi
+  const pdfUrl = `/api/transactions/normal/${id}/kuitansi`;
+  frame.src = pdfUrl;
+  downloadBtn.href = pdfUrl;
+  modal.style.display = 'flex';
+}
+function closePdfModal() {
+  document.getElementById('pdfModal').style.display = 'none';
+  document.getElementById('pdfFrame').src = '';
+}
+</script>
+</body>
+</html>
