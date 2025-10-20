@@ -1,197 +1,216 @@
 package main
 
 import (
-	"database/sql"
-	"konveksi-app/handlers"
-	"konveksi-app/repositories"
-	"log"
-	"net/http"
-	"html/template"
+    "database/sql"
+    "konveksi-app/handlers"
+    "konveksi-app/repositories"
+    "log"
+    "net/http"
 
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/gorilla/mux"
+    _ "github.com/go-sql-driver/mysql"
+    "github.com/gorilla/mux"
 )
 
+// sessions is a simple in-memory session store (for demo purposes only)
+// var sessions = make(map[string]struct{})
+
+func authMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // Skip authentication untuk login page dan static assets
+        if r.URL.Path == "/" || r.URL.Path == "/login" || 
+           r.URL.Path == "/api/auth/login" || r.URL.Path == "/api/auth/logout" ||
+           (len(r.URL.Path) >= 8 && r.URL.Path[:8] == "/assets/") {
+            next.ServeHTTP(w, r)
+            return
+        }
+
+        // Check session/authentication
+        session, err := r.Cookie("session")
+        if err != nil || session.Value == "" {
+            http.Redirect(w, r, "/login", http.StatusSeeOther)
+            return
+        }
+        
+        // Validate session exists menggunakan handler's session store
+        if !handlers.ValidateSession(session.Value) {
+            log.Printf("Invalid session: %s for path: %s", session.Value, r.URL.Path)
+            http.Redirect(w, r, "/login", http.StatusSeeOther)
+            return
+        }
+
+        log.Printf("Valid session found for path: %s", r.URL.Path)
+        next.ServeHTTP(w, r)
+    })
+}
+
 func main() {
-	// Initialize database connection
-	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/konveksi_bude")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+    // Initialize database connection
+    db, err := sql.Open("mysql", "root@tcp(localhost:3306)/konveksi_bude")
+    if err != nil {
+        log.Fatal("Failed to connect to database:", err)
+    }
+    defer db.Close()
 
-	// Test database connection
-	if err = db.Ping(); err != nil {
-		log.Fatal(err)
-	}
+    // Test database connection
+    if err = db.Ping(); err != nil {
+        log.Fatal("Failed to ping database:", err)
+    }
+    log.Println("Successfully connected to database")
 
-	// Initialize repositories
-	customerRepo := &repositories.CustomerRepository{DB: db}
-	// uniformRepo := &repositories.UniformRepository{DB: db}
-	// priceRepo := &repositories.PriceRepository{DB: db}
-	transactionRepo := &repositories.TransactionRepository{DB: db}
-	userRepo := &repositories.UserRepository{DB: db}
+    // Initialize repositories
+    customerRepo := &repositories.CustomerRepository{DB: db}
+    transactionRepo := &repositories.TransactionRepository{DB: db}
+    userRepo := &repositories.UserRepository{DB: db} // Tambah user repo
 
-	// Initialize handlers
-	customerHandler := &handlers.CustomerHandler{Repo: customerRepo}
-	// uniformHandler := &handlers.UniformHandler{Repo: uniformRepo}
-	// priceHandler := &handlers.PriceHandler{Repo: priceRepo}
-	transactionHandler := &handlers.TransactionHandler{Repo: transactionRepo}
-	userHandler := &handlers.UserHandler{Repo: userRepo, DB: db}
+    // Initialize handlers
+    customerHandler := &handlers.CustomerHandler{Repo: customerRepo}
+    transactionHandler := &handlers.TransactionHandler{Repo: transactionRepo}
+    dashboardHandler := &handlers.DashboardHandler{DB: db}
+    userHandler := &handlers.UserHandler{Repo: userRepo, DB: db} // Tambah user handler
 
-	tmpl := template.Must(template.ParseGlob("templates/*.html"))
+    // Setup router
+    r := mux.NewRouter()
 
-	// Setup router
-	r := mux.NewRouter()
+    // Static files (CSS, JS, images)
+    r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets/"))))
 
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "templates/index.html")
-	})
-	r.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "templates/index.html")
-	})
+    // ==============================================
+    // AUTHENTICATION ROUTES (tanpa middleware)
+    // ==============================================
 
-	r.HandleFunc("/login", userHandler.LoginHandler).Methods("POST")
+    // Root route - ke login
+    r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "login.html")
+    }).Methods("GET")
 
-	// Dashboard setelah login
-	
-	dashboardHandler := handlers.DashboardHandler{DB: db, Tmpl: tmpl}
-	r.HandleFunc("/dashboard", dashboardHandler.HandleDashboard).Methods("GET")
+    // Login page
+    r.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "login.html")
+    }).Methods("GET")
 
-	// Overdue Payment
-	r.HandleFunc("/overdue-payment", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/overduepayment.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/overdue-payment", transactionHandler.GetOverduePaymentTransactions).Methods("GET")
+    // Login API
+    r.HandleFunc("/api/auth/login", userHandler.LoginAPI).Methods("POST")
+    r.HandleFunc("/api/auth/logout", userHandler.LogoutAPI).Methods("POST")
 
-	// Overdue Transaksi
-	r.HandleFunc("/overdue-transaksi", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/overduetransaksi.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/overdue-transaksi", transactionHandler.GetOverdueTransactions).Methods("GET")
-	r.HandleFunc("/edit-detail-transaksi/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editdetailtransaksi.html")
-	}).Methods("GET")
-	// Untuk transaksi biasa
-	r.HandleFunc("/api/transactions/normal/{id}", transactionHandler.GetByIDNormal).Methods("GET")
-	r.HandleFunc("/api/transactions/normal/{id}/order-items", transactionHandler.UpdateOrderItemsNormal).Methods("PUT")
+    // ==============================================
+    // PROTECTED ROUTES (dengan middleware)
+    // ==============================================
+    protected := r.PathPrefix("").Subrouter()
+    protected.Use(authMiddleware)
 
-	// Untuk repeat order
-	// r.HandleFunc("/api/transactions/repeat/{id}", transactionHandler.GetByIDRepeatOrder).Methods("GET")
-	// r.HandleFunc("/api/transactions/repeat/{id}/order-items", transactionHandler.UpdateOrderItemsRepeat).Methods("PUT")
+    // Dashboard page
+    protected.HandleFunc("/dashboard", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "index.html")
+    }).Methods("GET")
 
-	r.HandleFunc("/api/users", userHandler.CreateUser).Methods("POST")
+    // Dashboard API routes
+    protected.HandleFunc("/api/dashboard/stats", dashboardHandler.GetDashboardStats).Methods("GET")
+    protected.HandleFunc("/api/dashboard/notifications", dashboardHandler.GetNotifications).Methods("GET")
 
-	// Customer routes
-	r.HandleFunc("/api/customers", customerHandler.CreateCustomer).Methods("POST")
-	r.HandleFunc("/add-customer", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/addcust.html")
-	}).Methods("GET")	
-	r.HandleFunc("/api/customers", customerHandler.GetAllCustomers).Methods("GET")
-	r.HandleFunc("/customers", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "templates/customers.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/customers/{id}", customerHandler.GetCustomer).Methods("GET")
-	r.HandleFunc("/api/customers/{id}", customerHandler.UpdateCustomer).Methods("PUT")
-	r.HandleFunc("/edit-customer/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editcust.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/customers/{id}", customerHandler.DeleteCustomer).Methods("DELETE")
-	// Untuk update customer uniform
-	r.HandleFunc("/api/customer-uniforms/{id}", customerHandler.GetCustomerUniform).Methods("GET")
-	r.HandleFunc("/api/customer-uniforms/{id}", customerHandler.UpdateCustomerUniform).Methods("PUT")
-	r.HandleFunc("/api/customer-uniforms/{id}/price-history", customerHandler.GetUniformPriceHistory).Methods("GET")
-	r.HandleFunc("/historyharga/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/historyharga.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/transactions/{id}/kuitansi", transactionHandler.PrintKuitansi).Methods("GET")
-	r.HandleFunc("/api/transactions/normal/{id}/kuitansi", transactionHandler.PrintKuitansibiasa).Methods("GET")
-	r.HandleFunc("/edit-custuniform/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editcustuniform.html")
-	}).Methods("GET")
-	// Halaman detail seragam per customer
-	r.HandleFunc("/detailuniformcust/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/detailuniformcust.html")
-	}).Methods("GET")
+    // Customer routes
+    protected.HandleFunc("/kelolapelanggan", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "kelolapelanggan.html")
+    }).Methods("GET")
 
-	// API: Get all uniforms milik customer
-	r.HandleFunc("/api/customers/{id}/uniforms", customerHandler.GetUniformsByCustomerID).Methods("GET")
+    protected.HandleFunc("/api/customers", customerHandler.GetAllCustomers).Methods("GET")
+    protected.HandleFunc("/api/customers", customerHandler.CreateCustomer).Methods("POST")
+    protected.HandleFunc("/api/customers/{id}", customerHandler.GetCustomer).Methods("GET")
+    protected.HandleFunc("/api/customers/{id}", customerHandler.UpdateCustomer).Methods("PUT")
+    protected.HandleFunc("/api/customers/{id}", customerHandler.DeleteCustomer).Methods("DELETE")
 
-	// API: Delete customer_uniform
-	r.HandleFunc("/api/customer-uniforms/{id}", customerHandler.DeleteCustomerUniform).Methods("DELETE")
-	r.HandleFunc("/api/customers/{id}/uniforms", customerHandler.AddCustomerUniform).Methods("POST")
-	r.HandleFunc("/add-custuniform/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/addcustuniform.html")
-	}).Methods("GET")
+    protected.HandleFunc("/tambahpelanggan", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "tambahpelanggan.html")
+    }).Methods("GET")
 
+    protected.HandleFunc("/edit-customer/{id}", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "editcust.html")
+    }).Methods("GET")
 
-	r.HandleFunc("/repeat-order", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/repeat_order.html")
-	}).Methods("GET")
+    protected.HandleFunc("/detailpelanggan/{id}", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "detailpelanggan.html")
+    }).Methods("GET")
 
-		// Halaman tambah repeat order
-	r.HandleFunc("/repeat-order-form", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/repeat_order_form.html")
-	}).Methods("GET")
-	// API repeat order
-	// r.HandleFunc("/api/repeat-orders", transactionHandler.CreateRepeatOrder).Methods("POST")
+    // Customer uniform routes
+    protected.HandleFunc("/api/customers/{id}/uniforms", customerHandler.GetUniformsByCustomerID).Methods("GET")
+    protected.HandleFunc("/api/customers/{id}/uniforms", customerHandler.AddCustomerUniform).Methods("POST")
+    protected.HandleFunc("/api/customer-uniforms/{id}", customerHandler.GetCustomerUniform).Methods("GET")
+    protected.HandleFunc("/api/customer-uniforms/{id}", customerHandler.UpdateCustomerUniform).Methods("PUT")
+    protected.HandleFunc("/api/customer-uniforms/{id}", customerHandler.DeleteCustomerUniform).Methods("DELETE")
+    protected.HandleFunc("/api/customer-uniforms/{id}/price-history", customerHandler.GetUniformPriceHistory).Methods("GET")
 
+    // Transaction routes
+    protected.HandleFunc("/kelolatransaksi", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "kelolatransaksi.html")
+    }).Methods("GET")
 
-	// Transaction routes
-	r.HandleFunc("/api/transactions", transactionHandler.CreateTransaction).Methods("POST")
-	r.HandleFunc("/transaction-form", func(w http.ResponseWriter, r *http.Request) {
-    	http.ServeFile(w, r, "templates/transaction_form.html")
-	})
-	r.HandleFunc("/api/transactions/student", transactionHandler.GetAllTransactionStudent).Methods("GET")
-	r.HandleFunc("/api/transactions/order", transactionHandler.GetAllTransactionOrder).Methods("GET")
-	r.HandleFunc("/transactions", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/transaksi.html")
-	}).Methods("GET")
-	// Untuk detail repeat order
-	r.HandleFunc("/transaction-detail-repeat/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/detail_repeatorder.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/transactions/normal", transactionHandler.GetNormalTransactions).Methods("GET")
-	r.HandleFunc("/transaction-detail/{id}", func(w http.ResponseWriter, r *http.Request) {
-    	http.ServeFile(w, r, "templates/detail_transaksi.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/transactions/{id}/status", transactionHandler.UpdateStatus).Methods("PATCH")
-	r.HandleFunc("/api/transactions/{id}/status", transactionHandler.UpdateStatus).Methods("PUT")
-	r.HandleFunc("/remind-transaksi", func(w http.ResponseWriter, r *http.Request) {
-    	http.ServeFile(w, r, "templates/remindtransaksi.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/remind-transaksi", transactionHandler.GetRemindTransactions).Methods("GET")
-	r.HandleFunc("/remind-payment", func(w http.ResponseWriter, r *http.Request) {
-    	http.ServeFile(w, r, "templates/remindpayment.html")
-	}).Methods("GET")
-	r.HandleFunc("/editrepeatorder/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editrepeatorder.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/remind-payment", transactionHandler.GetRemindPayments).Methods("GET")
-	r.HandleFunc("/edit-transaksi/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/edittransaksi.html")
-	}).Methods("GET")
-	r.HandleFunc("/api/transactions/{id}", transactionHandler.UpdateTransaction).Methods("PUT")
-	r.HandleFunc("/editdetailtransaksi/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editdetailtransaksi.html")
-	}).Methods("GET")
+    protected.HandleFunc("/formpesanan", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "formpesanan.html")
+    }).Methods("GET")
 
-	r.HandleFunc("/editdetailrepeat/{id}", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "templates/editdetailrepeat.html")
-	}).Methods("GET")
+    protected.HandleFunc("/formpesananperitem", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "formpesananperitem.html")
+    }).Methods("GET")
 
+    protected.HandleFunc("/detailpesananperitem", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "detailpesananperitem.html")
+    }).Methods("GET")
 
-	r.HandleFunc("/repeat-order", func(w http.ResponseWriter, r *http.Request) {
-    	http.ServeFile(w, r, "templates/repeat_order.html")
-	}).Methods("GET")
-	// r.HandleFunc("/api/transactions/repeat", transactionHandler.GetRepeatOrders).Methods("GET")
+    protected.HandleFunc("/detailpesanan", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "detailpesanan.html")
+    }).Methods("GET")
 
-	r.HandleFunc("/api/transactions/student", transactionHandler.CreateStudentOrder).Methods("POST")
-	r.HandleFunc("/api/transactions/student/{id}", transactionHandler.GetByIDStudentOrder).Methods("GET")
-	r.HandleFunc("/api/transactions/student/{id}/order-items", transactionHandler.UpdateOrderItemsStudent).Methods("PUT")
-	// Handler di transaction_handler.go
-	r.HandleFunc("/api/transactions/student", transactionHandler.GetAllStudentOrders).Methods("GET")
-	// Start server
-	log.Println("Server running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+    protected.HandleFunc("/detailpesananperitem/{id}", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "detailpesananperitem.html")
+    }).Methods("GET")
+
+    protected.HandleFunc("/detailpesanan/{id}", func(w http.ResponseWriter, r *http.Request) {
+        http.ServeFile(w, r, "detailpesanan.html")
+    }).Methods("GET")
+
+    // Transaction API routes
+    protected.HandleFunc("/api/transactions/all", transactionHandler.GetAllTransactions).Methods("GET")
+    protected.HandleFunc("/api/transactions/normal/{id}", transactionHandler.GetByIDNormal).Methods("GET")
+    protected.HandleFunc("/api/transactions/student/{id}", transactionHandler.GetByIDStudentOrder).Methods("GET")
+    protected.HandleFunc("/api/transactions/{id}/customer-uniforms", transactionHandler.GetCustomerUniformsByTransactionID).Methods("GET")
+    protected.HandleFunc("/api/transactions", transactionHandler.CreateTransaction).Methods("POST")
+    protected.HandleFunc("/api/transactions/student", transactionHandler.CreateStudentOrder).Methods("POST")
+    protected.HandleFunc("/api/transactions/{id}/status", transactionHandler.UpdateStatus).Methods("PUT")
+    protected.HandleFunc("/api/customers/{customerID}/transactions", transactionHandler.GetCustomerTransactions).Methods("GET")
+    protected.HandleFunc("/api/transactions/{transactionID}/status", transactionHandler.UpdateTransactionStatus).Methods("PUT")
+    protected.HandleFunc("/api/transactions/{id}/print-kuitansi", transactionHandler.PrintKuitansi).Methods("GET")
+    protected.HandleFunc("/api/transactions/{id}/print-kuitansi-biasa", transactionHandler.PrintKuitansibiasa).Methods("GET")
+    protected.HandleFunc("/api/customers/list", customerHandler.GetAllCustomers).Methods("GET")
+    protected.HandleFunc("/api/student-order-items/{id}", transactionHandler.UpdateStudentOrderItem).Methods("PUT")
+    protected.HandleFunc("/api/order-items/{id}", transactionHandler.UpdateNormalOrderItem).Methods("PUT")
+    protected.HandleFunc("/api/transactions/{id}/header", transactionHandler.UpdateTransactionHeader).Methods("PUT")
+    protected.HandleFunc("/api/transactions/normal/{id}/items", transactionHandler.UpdateOrderItemsNormal).Methods("PUT")
+    protected.HandleFunc("/api/transactions/student/{id}/items", transactionHandler.UpdateOrderItemsStudent).Methods("PUT")
+
+    // CORS middleware
+    r.Use(func(next http.Handler) http.Handler {
+        return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+            w.Header().Set("Access-Control-Allow-Origin", "*")
+            w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+            w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+            if r.Method == "OPTIONS" {
+                w.WriteHeader(http.StatusOK)
+                return
+            }
+
+            next.ServeHTTP(w, r)
+        })
+    })
+
+    // Start server
+    log.Println("==============================================")
+    log.Println("🚀 DiOlif Fashion Management System")
+    log.Println("📍 Server running on: http://localhost:8080")
+    log.Println("🔑 Login: http://localhost:8080/")
+    log.Println("🏠 Dashboard: http://localhost:8080/dashboard")
+    log.Println("👥 Pelanggan: http://localhost:8080/kelolapelanggan")
+    log.Println("🛒 Transaksi: http://localhost:8080/kelolatransaksi")
+    log.Println("==============================================")
+
+    log.Fatal(http.ListenAndServe(":8080", r))
 }
