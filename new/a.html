@@ -1,0 +1,52 @@
+<div class="modal fade" id="modalTambahPesanan" tabindex="-1" aria-labelledby="modalTambahPesananLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content p-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="modalTambahPesananLabel">Tambah Pesanan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="formPesanan">
+                    <div class="mb-3">
+                        <label class="form-label">Nama</label>
+                        <input type="text" class="form-control" name="nama" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Kelas</label>
+                        <input type="text" class="form-control" name="kelas" required>
+                    </div>
+                    
+                    <div id="itemContainer">
+                        <div class="row mb-3 item-row">
+                            <div class="col-md-6">
+                                <label class="form-label">Pilihan Baju</label>
+                                <select class="form-select" name="baju[]">
+                                    <option value="">Pilih Baju</option>
+                                    <option value="Seragam A">Seragam A</option>
+                                    <option value="Seragam B">Seragam B</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Ukuran</label>
+                                <select class="form-select" name="ukuran[]">
+                                    <option value="">Pilih Ukuran</option>
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                    <option value="XL">XL</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="tambahItem" class="btn btn-outline-primary rounded-pill mb-3">+ Tambah Item</button>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-main rounded-pill">Simpan Pesanan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

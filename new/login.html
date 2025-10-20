@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>Login - DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <style>
+        .login-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .login-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .logo-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-lg-4">
+                    <div class="login-card p-5">
+                        <!-- Logo -->
+                        <div class="text-center logo-container">
+                            <img src="assets/images/logopanjang.png" alt="DiOlif Fashion" style="width: 120px; height: auto;">
+                        </div>
+                        
+                        <!-- Login Form -->
+                        <div class="text-center mb-4">
+                            <h4 class="fw-bold text-dark mb-2">Selamat Datang!</h4>
+                            <p class="text-muted">Silakan login untuk melanjutkan</p>
+                        </div>
+                        
+                        <form id="loginForm" onsubmit="handleLogin(event)">
+                            <div class="mb-3">
+                                <label for="username" class="form-label fw-semibold text-dark">Username</label>
+                                <div class="position-relative">
+                                    <i class="ph ph-user position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></i>
+                                    <input type="text" class="form-control ps-5 py-3" id="username" placeholder="Masukkan username" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="password" class="form-label fw-semibold text-dark">Password</label>
+                                <div class="position-relative">
+                                    <i class="ph ph-lock position-absolute start-0 top-50 translate-middle-y ms-3 text-muted"></i>
+                                    <input type="password" class="form-control ps-5 py-3" id="password" placeholder="Masukkan password" required>
+                                    <button type="button" class="btn position-absolute end-0 top-50 translate-middle-y me-2" onclick="togglePassword()">
+                                        <i class="ph ph-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label text-muted" for="rememberMe">
+                                    Ingat saya
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100 py-3 fw-semibold rounded-pill" id="loginBtn">
+                                <i class="ph ph-sign-in me-2"></i>
+                                <span id="loginBtnText">Masuk</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Demo Note -->
+                        <div class="mt-4 p-3 bg-light rounded">
+                            <small class="text-muted d-block text-center mb-2">
+                                <strong>Catatan:</strong>
+                            </small>
+                            <small class="text-muted d-block">Gunakan username dan password yang terdaftar di database</small>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="text-center mt-4">
+                            <small class="text-muted">
+                                &copy; 2025 DiOlif Fashion. All rights reserved.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <!-- Phosphor Js -->
+    <script src="assets/js/phosphor-icon.js"></script>
+
+  <script>
+        // Handle login form submission
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            
+            console.log('Login attempt:', { username, password }); // Debug log
+            
+            if (!username || !password) {
+                showAlert('Username dan password wajib diisi!', 'danger');
+                return;
+            }
+            
+            // Set loading state
+            loginBtn.classList.add('btn-loading');
+            loginBtn.disabled = true;
+            loginBtnText.innerHTML = '<i class="ph ph-spinner-gap me-2"></i>Memproses...';
+            
+            try {
+                console.log('Sending login request...');
+                
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.success === "true" || data.success === true) {
+                    showAlert('Login berhasil! Mengarahkan ke dashboard...', 'success');
+                    
+                    // Store user info in localStorage (optional)
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    // Force redirect immediately (no delay)
+                    console.log('Redirecting to dashboard...');
+                    window.location.href = '/dashboard';
+                    
+                } else {
+                    console.log('Login failed:', data.message);
+                    showAlert(data.message || 'Login gagal!', 'danger');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Terjadi kesalahan koneksi!', 'danger');
+            } finally {
+                // Reset loading state
+                loginBtn.classList.remove('btn-loading');
+                loginBtn.disabled = false;
+                loginBtnText.innerHTML = '<i class="ph ph-sign-in me-2"></i>Masuk';
+            }
+        }
+        
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.className = 'ph ph-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.className = 'ph ph-eye';
+            }
+        }
+        
+        // Alert system
+        function showAlert(message, type) {
+            // Remove existing alerts
+            const existingAlerts = document.querySelectorAll('.alert-custom');
+            existingAlerts.forEach(alert => alert.remove());
+            
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed alert-custom`;
+            alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv && alertDiv.parentNode) {
+                    alertDiv.parentNode.removeChild(alertDiv);
+                }
+            }, 5000);
+        }
+        
+        // Check if already logged in (check cookie)
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, checking existing session...');
+            
+            // Simple check untuk existing session - jika ada cookie session, redirect
+            if (document.cookie.indexOf('session=') !== -1) {
+                console.log('Existing session found, redirecting to dashboard...');
+                window.location.href = '/dashboard';
+            }
+        });
+        
+        // Add some debugging info
+        console.log('Login page loaded');
+        console.log('Available test credentials:');
+        console.log('Username: admin, Password: admin123');
+        console.log('Username: operator, Password: operator123');
+        console.log('Username: manager, Password: manager123');
+</script>
+
+</body>
+</html>

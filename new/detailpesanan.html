@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head> 
+<body>
+    
+<!--==================== Preloader Start ====================-->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+<!--==================== Preloader End ====================-->
+
+<!--==================== Sidebar Overlay End ====================-->
+<div class="side-overlay"></div>
+<!--==================== Sidebar Overlay End ====================-->
+
+    <!-- ============================ Sidebar Start ============================ -->
+<aside class="sidebar">
+    <!-- sidebar close btn -->
+     <button type="button" class="sidebar-close-btn text-gray-500 hover-text-white hover-bg-main-600 text-md w-24 h-24 border border-gray-100 hover-border-main-600 d-xl-none d-flex flex-center rounded-circle position-absolute"><i class="ph ph-x"></i></button>
+    <!-- sidebar close btn -->
+    
+     <a href="index.html" class="sidebar__logo text-center p-20 position-sticky inset-block-start-0 bg-white w-100 z-1 pb-10">
+    <img src="assets/images/logopanjang.png" alt="Logo" style="width: 100px; height: auto;">
+</a>
+
+    <div class="sidebar-menu-wrapper overflow-y-auto scroll-sm">
+        <div class="p-20 pt-10">
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu__item">
+                    <a href="index.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-squares-four" ></i></span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="/kelolapelanggan" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-standard-definition" ></i></span>
+                        <span class="text">Kelola Pelanggan</span>
+                    </a>
+                </li> 
+                <li class="sidebar-menu__item">
+                    <a href="/kelolatransaksi" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-shopping-cart"></i></span>
+                        <span class="text">Kelola Transaksi</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <span class="text-gray-300 text-sm px-20 pt-20 fw-semibold border-top border-gray-100 d-block text-uppercase">Settings</span>
+                </li>
+                
+                <li class="sidebar-menu__item">
+                    <a href="setting.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-gear"></i></span>
+                        <span class="text">Account Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>    
+<!-- ============================ Sidebar End  ============================ -->
+
+    <div class="dashboard-main-wrapper">
+        <div class="top-navbar flex-between gap-16">
+    <div class="flex-align gap-16">
+        <!-- Toggle Button Start -->
+         <button type="button" class="toggle-btn d-xl-none d-flex text-26 text-gray-500"><i class="ph ph-list"></i></button>
+        <!-- Toggle Button End -->
+        
+        <form action="#" class="w-350 d-sm-block d-none">
+            <div class="position-relative">
+                <button type="submit" class="input-icon text-xl d-flex text-gray-100 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
+                <input type="text" class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Search...">
+            </div>
+        </form>
+    </div>
+
+    <div class="flex-align gap-16">
+        <div class="flex-align gap-8">
+            <!-- Notification Start -->
+            <div class="dropdown">
+                <button class="dropdown-btn shaking-animation text-gray-500 w-40 h-40 bg-main-50 hover-bg-main-100 transition-2 rounded-circle text-xl flex-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="position-relative">
+                        <i class="ph ph-bell"></i>
+                        <span class="alarm-notify position-absolute end-0"></span>
+                    </span>
+                </button>
+            </div>
+            <!-- Notification End -->
+        </div>
+
+        <!-- User Profile Start -->
+        <div class="dropdown">
+            <button class="users arrow-down-icon border border-gray-200 rounded-pill p-4 d-inline-block pe-40 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="position-relative">
+                    <img src="assets/images/PP.png" alt="Image" class="h-32 w-32 rounded-circle">
+                    <span class="activation-badge w-8 h-8 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                </span>
+            </button>
+        </div>
+        <!-- User Profile End -->
+    </div>
+</div>
+
+<div class="dashboard-body">
+    <!-- Breadcrumb Start -->
+     <div class="breadcrumb mb-24">
+        <ul class="flex-align gap-4">
+            <li><a href="index.html" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+            <li><span class="text-gray-200 fw-normal text-15 hover-text-main-600">Kelola Transaksi</span></li>
+            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+            <li><span class="text-main-600 fw-normal text-15">Detail Pesanan</span></li>
+        </ul>
+    </div>
+    <!-- Breadcrumb End -->
+     
+    <!-- Course Tab Start -->
+    <div class="card">
+        <div class="card-header border-bottom">
+    <div class="flex-between flex-wrap gap-16">
+        <div>
+            <h5 class="mb-4">Detail Pesanan #<span id="transactionIdHeader">-</span></h5>
+        </div>
+        <div class="flex-align flex-wrap justify-content-end gap-8">
+            <button type="button" class="btn btn-outline-secondary" onclick="window.history.back()">
+                <i class="ph ph-arrow-left me-1"></i>Kembali
+            </button>
+            <button type="button" class="btn btn-success" id="btnPrintKuitansi" onclick="printCurrentTransactionStudent()" disabled>
+                <i class="ph ph-printer me-1"></i>Print Kuitansi
+            </button>
+        </div>
+    </div>
+</div>
+
+        <div class="card-body">
+            <form action="#">
+                <div class="row gy-20">
+                    <div class="col-12">
+                        <div class="row g-20">
+                            <!-- Nama Pelanggan -->
+                            <div class="col-sm-12">
+                                <label for="courseCategory" class="h5 mb-8 fw-semibold font-heading">Nama Pelanggan</label>
+                                <input type="text" id="courseCategory" class="form-control py-12 placeholder-13 text-15" readonly>
+                            </div>
+                            <!-- Nama Pelanggan -->
+
+                            <!-- Tanggal Order -->
+                            <div class="col-sm-3">
+                                <label for="tanggalOrder" class="h5 mb-8 fw-semibold font-heading">Tanggal Order</label>
+                                <input type="date" id="tanggalOrder" class="form-control py-12 placeholder-13 text-15" readonly>
+                            </div>
+                            <!-- Tanggal Order -->
+
+                            <!-- Tanggal Target Selesai -->
+                            <div class="col-sm-3">
+                                <label for="tanggalSelesai" class="h5 mb-8 fw-semibold font-heading">Target Selesai</label>
+                                <input type="date" id="tanggalSelesai" class="form-control py-12 placeholder-13 text-15" readonly>
+                            </div>
+                            <!-- Tanggal Target Selesai -->
+
+                            <!-- Status Transaksi -->
+                            <div class="col-sm-3">
+                                <label for="statusPembayaran" class="h5 mb-8 fw-semibold font-heading">Status Transaksi</label>
+                                <div class="input-group">
+                                    <input type="text" id="statusPembayaran" class="form-control py-12 placeholder-13 text-15" readonly>
+                                    <button type="button" class="btn btn-outline-primary" onclick="openStatusModal()">
+                                        <i class="ph ph-pencil-simple"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <label for="notesTransaksi" class="h5 mb-8 fw-semibold font-heading">Catatan Transaksi</label>
+                                <textarea id="notesTransaksi" class="form-control py-12 placeholder-13 text-15" rows="3" readonly></textarea>
+                            </div>
+                            <!-- Status Transaksi -->
+                        </div>
+                    </div>
+
+                    <div class="card-header border-bottom border-gray-100 flex-align gap-8">
+                        <h5 class="mb-0">Daftar Pesanan</h5>
+                    </div>
+
+                    <div class="card-body p-30 overflow-x-auto">
+                        <table id="studentTable" class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th class="h6 text-gray-300 text-center">NO</th>
+                                    <th class="h6 text-gray-300 text-center">Nama Siswa</th>
+                                    <th class="h6 text-gray-300 text-center">Kelas</th>
+                                    <th class="h6 text-gray-300 text-center">Pesanan</th>
+                                    <th class="h6 text-gray-300 text-center">Ukuran</th>
+                                    <th class="h6 text-gray-300 text-center">Jumlah</th>
+                                    <th class="h6 text-gray-300 text-center">Harga</th>
+                                    <th class="h6 text-gray-300 text-center">Catatan</th>
+                                    <th class="h6 text-gray-300 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data akan dimuat secara dinamis -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-header border-bottom border-gray-100 flex-align gap-8">
+                        <h5 class="mb-0">Summary</h5>
+                    </div>
+
+                    <div class="card-body p-30 overflow-x-auto">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th class="h6 text-gray-300 text-center">Pesanan</th>
+                                    <th class="h6 text-gray-300 text-center">Ukuran</th>
+                                    <th class="h6 text-gray-300 text-center">Jumlah</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Summary akan dimuat secara dinamis -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditStatus" tabindex="-1" aria-labelledby="modalEditStatusLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="modalEditStatusLabel">Ubah Status Transaksi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formEditStatus">
+                    <div class="mb-3">
+                        <label for="newStatus" class="form-label">Status Baru</label>
+                        <select class="form-select" id="newStatus" required>
+                            <!-- Options akan diisi dinamis berdasarkan status saat ini -->
+                        </select>
+                    </div>
+
+                    <div class="text-end mt-20">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-main rounded-pill">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit Student Order -->
+<div class="modal fade" id="modalEditStudentOrder" tabindex="-1" aria-labelledby="modalEditStudentOrderLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content p-4">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="modalEditStudentOrderLabel">Edit Pesanan Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+
+            <div class="modal-body">
+                <form id="formEditStudentOrder">
+                    <div id="editStudentItemContainer" class="mb-3 mt-20">
+                        <!-- Item pesanan siswa akan dimasukkan lewat JS -->
+                    </div>
+
+                    <div class="mb-3 text-end">
+                        <strong>Total Harga: Rp <span id="totalHargaEditStudent">0</span></strong>
+                    </div>
+
+                    <div class="text-end mt-20">
+                        <button type="submit" class="btn btn-main rounded-pill">Simpan Perubahan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+         <!-- Footer -->
+         <div class="dashboard-footer">
+            <div class="flex-between flex-wrap gap-16">
+                <p class="text-gray-300 text-13 fw-normal"> &copy; Copyright diOlif 2025, All Rights Reserved</p>
+                <div class="flex-align flex-wrap gap-16">
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">License</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">More Themes</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Documentation</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jquery js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <!-- Phosphor Js -->
+    <script src="assets/js/phosphor-icon.js"></script>
+    <!-- main js -->
+    <script src="assets/js/main.js"></script>
+
+<script>
+// Global variables
+let customerUniforms = [];
+let currentTransactionId = null;
+let currentStatus = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get transaction ID from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    currentTransactionId = urlParams.get('id');
+    
+    if (currentTransactionId) {
+        // Update header dengan transaction ID
+        const headerElement = document.getElementById('transactionIdHeader');
+        if (headerElement) {
+            headerElement.textContent = currentTransactionId;
+        }
+        
+        // Enable print button
+        const printButton = document.getElementById('btnPrintKuitansi');
+        if (printButton) {
+            printButton.disabled = false;
+        }
+        
+        // Load transaction detail dan customer uniforms
+        loadTransactionDetail(currentTransactionId);
+        loadCustomerUniforms(currentTransactionId);
+    }
+    
+    // Setup form submit handlers
+    setupFormHandlers();
+});
+
+function setupFormHandlers() {
+    // Handle status form submit
+    const formEditStatus = document.getElementById('formEditStatus');
+    if (formEditStatus) {
+        formEditStatus.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newStatus = document.getElementById('newStatus').value;
+            if (newStatus) {
+                updateTransactionStatus(newStatus);
+            }
+        });
+    }
+    
+    // Handle student order edit form submit
+    const formEditStudentOrder = document.getElementById('formEditStudentOrder');
+    if (formEditStudentOrder) {
+        formEditStudentOrder.addEventListener('submit', function(e) {
+            e.preventDefault();
+            saveStudentItemChanges();
+        });
+    }
+}
+
+// Load customer uniforms untuk transaction
+function loadCustomerUniforms(transactionId) {
+    console.log('Loading customer uniforms for transaction:', transactionId);
+    
+    fetch(`/api/transactions/${transactionId}/customer-uniforms`)
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to load customer uniforms');
+            return res.json();
+        })
+        .then(uniforms => {
+            console.log('Customer uniforms loaded:', uniforms);
+            customerUniforms = uniforms;
+        })
+        .catch(err => {
+            console.error('Error loading customer uniforms:', err);
+            customerUniforms = [];
+        });
+}
+
+// Load detail transaksi student order
+function loadTransactionDetail(transactionId) {
+    console.log('Loading transaction detail for ID:', transactionId);
+    
+    fetch(`/api/transactions/student/${transactionId}`)
+        .then(res => {
+            if (!res.ok) throw new Error('Transaksi tidak ditemukan');
+            return res.json();
+        })
+        .then(data => {
+            console.log('Transaction detail:', data);
+            populateTransactionForm(data);
+        })
+        .catch(err => {
+            console.error('Error loading transaction:', err);
+            showAlert('Gagal memuat detail transaksi: ' + err.message, 'danger');
+        });
+}
+
+function populateTransactionForm(data) {
+    console.log('Populating form with data:', data);
+    
+    // Update title
+    const cardHeader = document.querySelector('.card-header h5');
+    if (cardHeader && data.transaction && data.transaction.id) {
+        cardHeader.innerHTML = `Detail Pesanan #<span id="transactionIdHeader">${data.transaction.id}</span>`;
+    }
+    
+    // Populate customer
+    const customerSelect = document.getElementById('courseCategory');
+    if (customerSelect && data.transaction && data.transaction.customer_name) {
+        customerSelect.value = data.transaction.customer_name;
+    }
+    
+    // Populate tanggal order
+    if (data.transaction && data.transaction.transaction_date) {
+        const tanggalOrder = document.getElementById('tanggalOrder');
+        if (tanggalOrder) {
+            tanggalOrder.value = formatDateForInput(data.transaction.transaction_date);
+        }
+    }
+    
+    // Populate tanggal target selesai menggunakan payment_date
+    if (data.transaction && data.transaction.payment_date) {
+        const tanggalSelesai = document.getElementById('tanggalSelesai');
+        if (tanggalSelesai) {
+            tanggalSelesai.value = formatDateForInput(data.transaction.payment_date);
+        }
+    }
+    
+    // Populate status transaksi
+    const statusPembayaran = document.getElementById('statusPembayaran');
+    if (statusPembayaran && data.transaction && data.transaction.status) {
+        statusPembayaran.value = getStatusText(data.transaction.status);
+        currentStatus = data.transaction.status;
+    }
+    
+    // Populate notes transaksi
+    const notesTransaksi = document.getElementById('notesTransaksi');
+    if (notesTransaksi && data.transaction) {
+        notesTransaksi.value = data.transaction.notes || '';
+        notesTransaksi.placeholder = data.transaction.notes ? '' : 'Tidak ada catatan transaksi';
+    }
+    
+    // Populate table dengan student order items
+    if (data.items && Array.isArray(data.items) && data.items.length > 0) {
+        populateStudentTable(data.items);
+        generateSummaryTable(data.items);
+    } else {
+        const tbody = document.querySelector('#studentTable tbody');
+        if (tbody) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="9" class="text-center text-muted py-4">
+                        <p>Tidak ada data pesanan</p>
+                    </td>
+                </tr>
+            `;
+        }
+    }
+}
+
+function populateStudentTable(items) {
+    console.log('Populating student table with items:', items);
+    
+    const tbody = document.querySelector('#studentTable tbody');
+    if (!tbody) {
+        console.error('Table tbody not found');
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    
+    items.forEach((item, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${index + 1}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${item.student_name || 'Tidak ada nama'}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${item.grade || 'Tidak ada kelas'}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${item.uniform_name || 'Tidak ada pesanan'}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${item.size || '-'}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">${item.quantity || 0}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300">Rp ${formatCurrency(item.unit_price * item.quantity)}</span>
+            </td>
+            <td class="text-center">
+                <span class="h6 mb-0 fw-medium text-gray-300" title="${item.notes || ''}">${item.notes || '-'}</span>
+            </td>
+            <td class="text-center">
+                <button type="button" class="bg-main-50 text-main-600 py-2 px-14 rounded-pill hover-bg-main-600 hover-text-white d-inline-flex align-items-center gap-2 border-0 edit-student-item-btn" 
+                        data-item-id="${item.id}"
+                        data-student-name="${item.student_name}"
+                        data-grade="${item.grade}"
+                        data-uniform-name="${item.uniform_name}"
+                        data-size="${item.size}"
+                        data-quantity="${item.quantity}"
+                        data-unit-price="${item.unit_price}"
+                        data-notes="${item.notes || ''}"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modalEditStudentOrder">
+                    <i class="ph ph-pencil-simple"></i>
+                    Edit
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+    
+    // Add event listeners to edit buttons
+    const editButtons = document.querySelectorAll('.edit-student-item-btn');
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.getAttribute('data-item-id');
+            const studentName = this.getAttribute('data-student-name');
+            const grade = this.getAttribute('data-grade');
+            const uniformName = this.getAttribute('data-uniform-name');
+            const size = this.getAttribute('data-size');
+            const quantity = this.getAttribute('data-quantity');
+            const unitPrice = this.getAttribute('data-unit-price');
+            const notes = this.getAttribute('data-notes');
+            
+            editStudentItem(itemId, studentName, grade, uniformName, size, quantity, unitPrice, notes);
+        });
+    });
+}
+
+function editStudentItem(itemId, studentName, grade, uniformName, size, quantity, unitPrice, notes) {
+    console.log('Editing student item:', { itemId, studentName, grade, uniformName, size, quantity, unitPrice, notes });
+    
+    // Generate unique uniform names dari customerUniforms
+    const uniqueUniforms = [...new Set(customerUniforms.map(u => u.uniform_name))];
+    
+    // Generate uniform options
+    let uniformOptions = '';
+    uniqueUniforms.forEach(uniform => {
+        const selected = uniform === uniformName ? 'selected' : '';
+        uniformOptions += `<option value="${uniform}" ${selected}>${uniform}</option>`;
+    });
+    
+    // Get sizes for selected uniform dengan price
+    const sizesForUniform = customerUniforms.filter(u => u.uniform_name === uniformName);
+    let sizeOptions = '';
+    sizesForUniform.forEach(item => {
+        const selected = item.size === size ? 'selected' : '';
+        const price = item.price || 0;
+        sizeOptions += `<option value="${item.size}" data-price="${price}" ${selected}>${item.size} - Rp ${formatCurrency(price)}</option>`;
+    });
+    
+    // Populate modal dengan data item yang dipilih
+    const editStudentItemContainer = document.getElementById('editStudentItemContainer');
+    if (editStudentItemContainer) {
+        editStudentItemContainer.innerHTML = `
+            <div class="row g-3 align-items-end mb-4 item-row">
+                <div class="col-md-2">
+                    <label class="form-label text-center d-block">Nama Siswa</label>
+                    <input type="text" id="editStudentNameInput" class="form-control" style="height: 47px;" value="${studentName}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-center d-block">Kelas</label>
+                    <input type="text" id="editGradeInput" class="form-control" style="height: 47px;" value="${grade}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-center d-block">Pesanan</label>
+                    <select class="form-select" id="editUniformSelect" style="height: 47px;">
+                        ${uniformOptions}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-center d-block">Ukuran</label>
+                    <select class="form-select" id="editSizeSelect" style="height: 47px;">
+                        ${sizeOptions}
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <label class="form-label text-center d-block">Jumlah</label>
+                    <input type="number" id="editQuantityInput" class="form-control" style="height: 47px;" min="1" value="${quantity}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label text-center d-block">Harga</label>
+                    <input type="text" class="form-control harga-input" id="editPriceDisplay" style="height: 47px;" readonly>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label text-center d-block">Catatan</label>
+                    <input type="text" id="editNotesInput" class="form-control" style="height: 47px;" value="${notes}" placeholder="Catatan item">
+                </div>
+                <input type="hidden" id="editItemId" value="${itemId}">
+            </div>
+        `;
+        
+        // Add event listeners for dynamic updates
+        const uniformSelect = document.getElementById('editUniformSelect');
+        const sizeSelect = document.getElementById('editSizeSelect');
+        const quantityInput = document.getElementById('editQuantityInput');
+        
+        if (uniformSelect) {
+            uniformSelect.addEventListener('change', updateSizeOptions);
+        }
+        if (sizeSelect) {
+            sizeSelect.addEventListener('change', updatePrice);
+        }
+        if (quantityInput) {
+            quantityInput.addEventListener('input', updatePrice);
+        }
+        
+        // Update initial price
+        updatePrice();
+    }
+}
+
+// Update size options berdasarkan uniform yang dipilih
+function updateSizeOptions() {
+    const uniformSelect = document.getElementById('editUniformSelect');
+    const sizeSelect = document.getElementById('editSizeSelect');
+    
+    if (!uniformSelect || !sizeSelect) return;
+    
+    const selectedUniform = uniformSelect.value;
+    // Filter customer uniforms berdasarkan uniform yang dipilih
+    const sizesForUniform = customerUniforms.filter(u => u.uniform_name === selectedUniform);
+    
+    // Clear and populate size options dengan harga yang benar
+    sizeSelect.innerHTML = '';
+    sizesForUniform.forEach(item => {
+        const price = item.price || 0;
+        const option = new Option(`${item.size} - Rp ${formatCurrency(price)}`, item.size);
+        option.setAttribute('data-price', price);
+        sizeSelect.add(option);
+    });
+    
+    // Update price after changing sizes
+    updatePrice();
+}
+
+// Update price berdasarkan ukuran dan jumlah
+function updatePrice() {
+    const sizeSelect = document.getElementById('editSizeSelect');
+    const quantityInput = document.getElementById('editQuantityInput');
+    const priceDisplay = document.getElementById('editPriceDisplay');
+    const totalHargaEditStudent = document.getElementById('totalHargaEditStudent');
+    
+    if (!sizeSelect || !quantityInput || !priceDisplay) return;
+    
+    const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+    if (!selectedOption) return;
+    
+    const unitPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+    const quantity = parseInt(quantityInput.value) || 1;
+    const totalPrice = unitPrice * quantity;
+    
+    priceDisplay.value = `Rp ${formatCurrency(totalPrice)}`;
+    
+    // Update total harga di modal
+    if (totalHargaEditStudent) {
+        totalHargaEditStudent.textContent = formatCurrency(totalPrice);
+    }
+    
+    console.log('Price updated:', { unitPrice, quantity, totalPrice });
+}
+
+function saveStudentItemChanges() {
+    const itemId = document.getElementById('editItemId')?.value;
+    const studentNameInput = document.getElementById('editStudentNameInput');
+    const gradeInput = document.getElementById('editGradeInput');
+    const uniformSelect = document.getElementById('editUniformSelect');
+    const sizeSelect = document.getElementById('editSizeSelect');
+    const quantityInput = document.getElementById('editQuantityInput');
+    const notesInput = document.getElementById('editNotesInput');
+    
+    if (!itemId || !studentNameInput || !gradeInput || !uniformSelect || !sizeSelect || !quantityInput) {
+        showAlert('Data item tidak lengkap', 'warning');
+        return;
+    }
+    
+    const selectedSizeOption = sizeSelect.options[sizeSelect.selectedIndex];
+    const unitPrice = parseFloat(selectedSizeOption.getAttribute('data-price')) || 0;
+    
+    const updatedItem = {
+        student_name: studentNameInput.value,
+        grade: gradeInput.value,
+        uniform_name: uniformSelect.value,
+        size: sizeSelect.value,
+        quantity: parseInt(quantityInput.value),
+        unit_price: unitPrice,
+        notes: notesInput ? notesInput.value : '',
+        transaction_id: parseInt(currentTransactionId)
+    };
+    
+    console.log('Saving student item changes:', updatedItem);
+    
+    // Save ke server
+    fetch(`/api/student-order-items/${itemId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedItem)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Gagal menyimpan perubahan');
+        return res.json();
+    })
+    .then(() => {
+        showAlert('Perubahan item berhasil disimpan', 'success');
+        
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditStudentOrder'));
+        if (modal) {
+            modal.hide();
+        }
+        
+        // Reload transaction detail
+        if (currentTransactionId) {
+            loadTransactionDetail(currentTransactionId);
+        }
+    })
+    .catch(err => {
+        console.error('Error saving student item changes:', err);
+        showAlert('Gagal menyimpan perubahan: ' + err.message, 'danger');
+    });
+}
+
+// Generate summary table untuk student orders
+function generateSummaryTable(items) {
+    console.log('Generating summary table with items:', items);
+    
+    const summaryTable = document.querySelectorAll('table')[1];
+    
+    if (!summaryTable) {
+        console.error('Summary table not found');
+        return;
+    }
+    
+    const tbody = summaryTable.querySelector('tbody');
+    if (!tbody) {
+        console.error('Summary tbody not found');
+        return;
+    }
+    
+    // Aggregasi data berdasarkan uniform_name dan size
+    const summary = {};
+    
+    items.forEach(item => {
+        const key = `${item.uniform_name}_${item.size}`;
+        
+        if (summary[key]) {
+            summary[key].count += item.quantity;
+        } else {
+            summary[key] = {
+                item: item.uniform_name,
+                size: item.size,
+                count: item.quantity
+            };
+        }
+    });
+    
+    tbody.innerHTML = '';
+    
+    Object.values(summary).forEach(summaryItem => {
+        const row = `
+            <tr>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">${summaryItem.item}</span>
+                </td>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">${summaryItem.size}</span>
+                </td>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">${summaryItem.count}</span>
+                </td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+    
+    console.log('Summary table generated successfully');
+}
+
+function printCurrentTransactionStudent() {
+    if (!currentTransactionId) {
+        showAlert('ID transaksi tidak ditemukan', 'warning');
+        return;
+    }
+    
+    const printUrl = `/api/transactions/${currentTransactionId}/print-kuitansi`;
+    window.open(printUrl, '_blank');
+}
+
+function openStatusModal() {
+    const statusInput = document.getElementById('statusPembayaran');
+    if (!statusInput) return;
+    
+    currentStatus = getStatusValue(statusInput.value);
+    console.log('Current status:', currentStatus);
+    
+    const newStatusSelect = document.getElementById('newStatus');
+    if (!newStatusSelect) return;
+    
+    // Clear previous options
+    newStatusSelect.innerHTML = '';
+    
+    // Tentukan status yang bisa dipilih berdasarkan status saat ini
+    let availableStatuses = [];
+    
+    switch(currentStatus.toLowerCase()) {
+        case 'paid':
+            availableStatuses = [
+                { value: 'pending', text: 'Belum Bayar' },
+                { value: 'cancelled', text: 'Dibatalkan' }
+            ];
+            break;
+        case 'pending':
+            availableStatuses = [
+                { value: 'paid', text: 'Lunas' },
+                { value: 'cancelled', text: 'Dibatalkan' }
+            ];
+            break;
+        case 'cancelled':
+            availableStatuses = [
+                { value: 'pending', text: 'Belum Bayar' },
+                { value: 'paid', text: 'Lunas' }
+            ];
+            break;
+        default:
+            availableStatuses = [
+                { value: 'pending', text: 'Belum Bayar' },
+                { value: 'paid', text: 'Lunas' },
+                { value: 'cancelled', text: 'Dibatalkan' }
+            ];
+    }
+    
+    // Populate options
+    availableStatuses.forEach(status => {
+        const option = new Option(status.text, status.value);
+        newStatusSelect.add(option);
+    });
+    
+    // Show modal
+    const modal = new bootstrap.Modal(document.getElementById('modalEditStatus'));
+    modal.show();
+}
+
+function getStatusValue(statusText) {
+    switch(statusText.toLowerCase()) {
+        case 'lunas':
+            return 'paid';
+        case 'dp':
+            return 'dp';
+        case 'belum bayar':
+            return 'pending';
+        case 'dibatalkan':
+            return 'cancelled';
+        case 'proses':
+            return 'processing';
+        default:
+            return statusText.toLowerCase();
+    }
+}
+
+function updateTransactionStatus(newStatus) {
+    if (!currentTransactionId) {
+        showAlert('ID Transaksi tidak ditemukan', 'danger');
+        return;
+    }
+    
+    fetch(`/api/transactions/${currentTransactionId}/status`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            status: newStatus
+        })
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Gagal mengubah status');
+        return res.text();
+    })
+    .then(() => {
+        showAlert('Status transaksi berhasil diubah', 'success');
+        
+        // Update status di form
+        const statusInput = document.getElementById('statusPembayaran');
+        if (statusInput) {
+            statusInput.value = getStatusText(newStatus);
+        }
+        
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('modalEditStatus'));
+        if (modal) {
+            modal.hide();
+        }
+        
+        // Update current status
+        currentStatus = newStatus;
+    })
+    .catch(err => {
+        console.error('Error updating status:', err);
+        showAlert('Gagal mengubah status: ' + err.message, 'danger');
+    });
+}
+
+function getStatusText(status) {
+    if (!status) return 'Tidak diketahui';
+    
+    switch(status.toLowerCase()) {
+        case 'paid':
+            return 'Lunas';
+        case 'dp':
+        case 'partial':
+            return 'DP';
+        case 'pending':
+            return 'Belum Bayar';
+        case 'processing':
+            return 'Proses';
+        case 'cancelled':
+            return 'Dibatalkan';
+        default:
+            return status;
+    }
+}
+
+function formatDateForInput(dateString) {
+    if (!dateString) return '';
+    
+    try {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    } catch (error) {
+        console.error('Error formatting date:', error);
+        return '';
+    }
+}
+
+function formatCurrency(amount) {
+    if (!amount || amount === 0 || amount === null || amount === undefined) return '0';
+    
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount)) return '0';
+    
+    return numAmount.toLocaleString('id-ID');
+}
+
+function showAlert(message, type) {
+    const existingAlerts = document.querySelectorAll('.alert-custom');
+    existingAlerts.forEach(alert => alert.remove());
+    
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed alert-custom`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv && alertDiv.parentNode) {
+            alertDiv.parentNode.removeChild(alertDiv);
+        }
+    }, 5000);
+}
+</script>
+
+    </body>
+</html>

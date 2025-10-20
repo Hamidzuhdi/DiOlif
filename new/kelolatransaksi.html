@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title> DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head> 
+<body>
+    
+<!--==================== Preloader Start ====================-->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+<!--==================== Preloader End ====================-->
+
+<!--==================== Sidebar Overlay End ====================-->
+<div class="side-overlay"></div>
+<!--==================== Sidebar Overlay End ====================-->
+
+    <!-- ============================ Sidebar Start ============================ -->
+<aside class="sidebar">
+    <!-- sidebar close btn -->
+     <button type="button" class="sidebar-close-btn text-gray-500 hover-text-white hover-bg-main-600 text-md w-24 h-24 border border-gray-100 hover-border-main-600 d-xl-none d-flex flex-center rounded-circle position-absolute"><i class="ph ph-x"></i></button>
+    <!-- sidebar close btn -->
+    
+     <a href="index.html" class="sidebar__logo text-center p-20 position-sticky inset-block-start-0 bg-white w-100 z-1 pb-10">
+    <img src="assets/images/logopanjang.png" alt="Logo" style="width: 100px; height: auto;">
+</a>
+
+    <div class="sidebar-menu-wrapper overflow-y-auto scroll-sm">
+        <div class="p-20 pt-10">
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu__item">
+                    <a href="/dashboard" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-squares-four" ></i></span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="/kelolapelanggan" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-standard-definition" ></i></span>
+                        <span class="text">Kelola Pelanggan</span>
+                    </a>
+                </li> 
+                <li class="sidebar-menu__item">
+                    <a href="/kelolatransaksi" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-shopping-cart"></i></span>
+                        <span class="text">Kelola Transaksi</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <span class="text-gray-300 text-sm px-20 pt-20 fw-semibold border-top border-gray-100 d-block text-uppercase">Settings</span>
+                </li>
+                
+                <li class="sidebar-menu__item">
+                    <a href="setting.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-gear"></i></span>
+                        <span class="text">Account Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>    
+<!-- ============================ Sidebar End  ============================ -->
+
+    <div class="dashboard-main-wrapper">
+        <div class="top-navbar flex-between gap-16">
+    <div class="flex-align gap-16">
+        <!-- Toggle Button Start -->
+         <button type="button" class="toggle-btn d-xl-none d-flex text-26 text-gray-500"><i class="ph ph-list"></i></button>
+        <!-- Toggle Button End -->
+        
+        <form action="#" class="w-350 d-sm-block d-none">
+            <div class="position-relative">
+                <button type="submit" class="input-icon text-xl d-flex text-gray-100 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
+                <input type="text" class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Search...">
+            </div>
+        </form>
+    </div>
+
+    <div class="flex-align gap-16">
+        <div class="flex-align gap-8">
+            <!-- Notification Start -->
+            <div class="dropdown">
+                <button class="dropdown-btn shaking-animation text-gray-500 w-40 h-40 bg-main-50 hover-bg-main-100 transition-2 rounded-circle text-xl flex-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="position-relative">
+                        <i class="ph ph-bell"></i>
+                        <span class="alarm-notify position-absolute end-0"></span>
+                    </span>
+                </button>
+            </div>
+            <!-- Notification End -->
+        </div>
+
+        <!-- User Profile Start -->
+        <div class="dropdown">
+            <button class="users arrow-down-icon border border-gray-200 rounded-pill p-4 d-inline-block pe-40 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="position-relative">
+                    <img src="assets/images/PP.png" alt="Image" class="h-32 w-32 rounded-circle">
+                    <span class="activation-badge w-8 h-8 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                </span>
+            </button>
+        </div>
+        <!-- User Profile End -->
+    </div>
+</div>
+
+<div class="dashboard-body">
+    <!-- Update bagian dropdown di breadcrumb -->
+<div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
+    <!-- Breadcrumb Start -->
+    <div class="breadcrumb mb-24">
+        <ul class="flex-align gap-4">
+            <li><a href="index.html" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+            <li><span class="text-main-600 fw-normal text-15">Kelola Transaksi</span></li>
+        </ul>
+    </div>
+    <!-- Breadcrumb End -->
+     
+    <!-- Breadcrumb Right Start -->
+    <div class="dropdown position-relative">
+        <button class="btn btn-main dropdown-toggle rounded-pill py-7 d-flex align-items-center gap-2 fw-normal"
+            type="button" id="dropdownTambahPesanan" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="ph ph-plus"></i> Tambah Pesanan
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownTambahPesanan">
+            <li><a class="dropdown-item" href="/formpesanan">Form per Anak (Student Order)</a></li>
+            <li><a class="dropdown-item" href="/formpesananperitem">Form per Item (Normal Order)</a></li>
+        </ul>
+    </div>
+    <!-- Breadcrumb Right End -->
+</div>
+
+    <div class="card overflow-hidden mt">
+        <div class="card-body p-10 overflow-x-auto">
+            <table id="studentTable" class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th class="fixed-width text-center">No</th>
+                        <th class="h6 text-gray-300">Tanggal</th>
+                        <th class="h6 text-gray-300 text-center">Nama Pelanggan</th>
+                        <th class="h6 text-gray-300 text-center">Jumlah Item</th>
+                        <th class="h6 text-gray-300 text-center">Total Harga</th>
+                        <th class="h6 text-gray-300 text-center">Status</th>
+                        <th class="h6 text-gray-300 text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data akan diload secara dinamis -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+         <!-- Footer -->
+         <div class="dashboard-footer">
+            <div class="flex-between flex-wrap gap-16">
+                <p class="text-gray-300 text-13 fw-normal"> &copy; Copyright diOlif 2025, All Rights Reserved</p>
+                <div class="flex-align flex-wrap gap-16">
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">License</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">More Themes</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Documentation</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Jquery js -->
+    <script src="assets/js/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap Bundle Js -->
+    <script src="assets/js/boostrap.bundle.min.js"></script>
+    <!-- Phosphor Js -->
+    <script src="assets/js/phosphor-icon.js"></script>
+    <!-- dataTables -->
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <!-- main js -->
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        <!-- Ganti script di bagian getDetailUrl function -->
+let transactionDataTable = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadAllTransactions();
+});
+
+function initializeDataTable() {
+    // Destroy existing DataTable jika ada
+    if (transactionDataTable) {
+        transactionDataTable.destroy();
+        transactionDataTable = null;
+    }
+    
+    // Initialize DataTable yang baru
+    transactionDataTable = $('#studentTable').DataTable({
+        searching: false,
+        lengthChange: false,
+        info: false,
+        paging: false,
+        "columnDefs": [
+            { "orderable": false, "targets": [0, 6] }
+        ]
+    });
+}
+
+function openTransactionDetail(transactionId, transactionType, hasStudentInfo) {
+    console.log(`Opening detail for transaction ${transactionId} with type ${transactionType}, hasStudentInfo: ${hasStudentInfo}`);
+    
+    // LOGIC YANG BENAR:
+    // Jika ada informasi siswa (nama siswa dan kelas), arahkan ke detailpesanan.html
+    // Jika tidak ada informasi siswa, arahkan ke detailpesananperitem.html
+    
+    if (hasStudentInfo === true || hasStudentInfo === 'true') {
+        console.log('Redirecting to detailpesanan.html (has student info)');
+        window.location.href = `/detailpesanan?id=${transactionId}`;
+    } else {
+        console.log('Redirecting to detailpesananperitem.html (no student info)');
+        window.location.href = `/detailpesananperitem?id=${transactionId}`;
+    }
+}
+
+function displayTransactions(transactions) {
+    const tbody = document.querySelector('#studentTable tbody');
+    if (!tbody) return;
+    
+    // Destroy DataTable sebelum mengubah content
+    if (transactionDataTable) {
+        transactionDataTable.destroy();
+        transactionDataTable = null;
+    }
+    
+    tbody.innerHTML = '';
+    
+    if (transactions.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="text-center text-muted py-4">
+                    <p>Tidak ada data transaksi</p>
+                </td>
+            </tr>
+        `;
+        initializeDataTable();
+        return;
+    }
+    
+    transactions.forEach((transaction, index) => {
+        const statusClass = getStatusClass(transaction.status);
+        const statusText = getStatusText(transaction.status);
+        
+        const row = `
+            <tr>
+                <td class="fixed-width">${index + 1}</td>
+                <td class="text-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="h6 mb-0 fw-medium text-gray-300">${formatDate(transaction.transaction_date)}</span>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">${transaction.customer_name || 'Tidak ada nama'}</span>
+                </td>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">${transaction.item_count || 0}</span>
+                </td>
+                <td class="text-center">
+                    <span class="h6 mb-0 fw-medium text-gray-300">Rp ${formatCurrency(transaction.total_price)}</span>
+                </td>
+                <td class="text-center">
+                    <span class="text-13 py-2 px-8 ${statusClass} d-inline-flex align-items-center gap-8 rounded-pill">
+                        <span class="w-6 h-6 ${getStatusDotClass(transaction.status)} rounded-circle flex-shrink-0"></span>
+                        ${statusText}
+                    </span>
+                </td>
+                <td class="text-center">
+                    <div class="d-flex gap-1 justify-content-center">
+                        <button 
+                            type="button"
+                            onclick="openTransactionDetail(${transaction.id}, '${transaction.transaction_type}', ${transaction.has_student_info})"
+                            class="bg-main-50 text-main-600 py-2 px-14 rounded-pill hover-bg-main-600 hover-text-white d-inline-flex align-items-center gap-2 border-0"
+                            title="${transaction.has_student_info ? 'Transaksi dengan data siswa' : 'Transaksi per item'}">
+                            <i class="ph ph-eye"></i>
+                            Detail
+                        </button>
+                        <button 
+                            type="button"
+                            onclick="previewKuitansi(${transaction.id}, ${transaction.has_student_info})"
+                            class="bg-success-50 text-success-600 py-2 px-14 rounded-pill hover-bg-success-600 hover-text-white d-inline-flex align-items-center gap-2 border-0"
+                            title="Preview dan Print Kuitansi">
+                            <i class="ph ph-printer"></i>
+                            Print
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+    
+    initializeDataTable();
+}
+
+// Function untuk preview kuitansi
+function previewKuitansi(transactionId, hasStudentInfo) {
+    console.log('Preview kuitansi for transaction:', transactionId, 'hasStudentInfo:', hasStudentInfo);
+    
+    let printUrl;
+    
+    if (hasStudentInfo === true || hasStudentInfo === 'true') {
+        // Untuk transaksi student order
+        printUrl = `/api/transactions/${transactionId}/print-kuitansi`;
+    } else {
+        // Untuk transaksi normal/item order
+        printUrl = `/api/transactions/${transactionId}/print-kuitansi-biasa`;
+    }
+    
+    console.log('Opening print URL:', printUrl);
+    
+    // Buka PDF di tab baru untuk preview
+    window.open(printUrl, '_blank');
+}
+
+// Pastikan loadAllTransactions juga ada debug log
+function loadAllTransactions() {
+    console.log('Loading all transactions...');
+    fetch('/api/transactions/all')
+        .then(res => {
+            if (!res.ok) throw new Error('Failed to fetch transactions');
+            return res.json();
+        })
+        .then(transactions => {
+            console.log('Received transactions:', transactions);
+            console.log('Total transactions:', transactions.length);
+            
+            // Debug setiap transaksi
+            transactions.forEach(t => {
+                console.log(`Transaction ${t.id}: hasStudentInfo = ${t.has_student_info}, type = ${t.transaction_type}`);
+            });
+            
+            displayTransactions(transactions);
+        })
+        .catch(err => {
+            console.error('Error loading transactions:', err);
+            showAlert('Gagal memuat data transaksi: ' + err.message, 'danger');
+        });
+}
+
+// Tentukan URL detail berdasarkan tipe transaksi (backup function)
+function getDetailUrl(transactionId, transactionType) {
+    if (transactionType === 'student_order') {
+        return `/detailpesanan?id=${transactionId}`;
+    } else if (transactionType === 'item_order') {
+        return `/detailpesananperitem?id=${transactionId}`;
+    } else {
+        return `#`; // fallback
+    }
+}
+
+// Utility functions untuk styling status
+function getStatusClass(status) {
+    if (!status) return 'bg-gray-50 text-gray-600';
+    
+    switch(status.toLowerCase()) {
+        case 'paid':
+        case 'lunas':
+            return 'bg-success-50 text-success-600';
+        case 'dp':
+        case 'partial':
+            return 'bg-warning-50 text-warning-600';
+        case 'pending':
+        case 'belum bayar':
+            return 'bg-danger-50 text-danger-600';
+        case 'processing':
+        case 'proses':
+            return 'bg-info-50 text-info-600';
+        default:
+            return 'bg-gray-50 text-gray-600';
+    }
+}
+
+function getStatusDotClass(status) {
+    if (!status) return 'bg-gray-600';
+    
+    switch(status.toLowerCase()) {
+        case 'paid':
+        case 'lunas':
+            return 'bg-success-600';
+        case 'dp':
+        case 'partial':
+            return 'bg-warning-600';
+        case 'pending':
+        case 'belum bayar':
+            return 'bg-danger-600';
+        case 'processing':
+        case 'proses':
+            return 'bg-info-600';
+        default:
+            return 'bg-gray-600';
+    }
+}
+
+function getStatusText(status) {
+    if (!status) return 'Tidak diketahui';
+    
+    switch(status.toLowerCase()) {
+        case 'paid':
+            return 'Lunas';
+        case 'dp':
+        case 'partial':
+            return 'DP';
+        case 'pending':
+            return 'Belum Bayar';
+        case 'processing':
+            return 'Proses';
+        default:
+            return status;
+    }
+}
+
+// Format tanggal
+function formatDate(dateString) {
+    if (!dateString) return 'Tidak diketahui';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+    });
+}
+
+// Format currency
+function formatCurrency(amount) {
+    if (!amount || amount === 0 || amount === null || amount === undefined) return '0';
+    
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount)) return '0';
+    
+    return numAmount.toLocaleString('id-ID');
+}
+
+// Alert system
+function showAlert(message, type) {
+    const existingAlerts = document.querySelectorAll('.alert-custom');
+    existingAlerts.forEach(alert => alert.remove());
+    
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed alert-custom`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv && alertDiv.parentNode) {
+            alertDiv.parentNode.removeChild(alertDiv);
+        }
+    }, 5000);
+}
+    </script>
+
+    </body>
+</html>

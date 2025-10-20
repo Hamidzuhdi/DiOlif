@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title> DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- file upload -->
+    <link rel="stylesheet" href="assets/css/file-upload.css">
+    <!-- file upload -->
+    <link rel="stylesheet" href="assets/css/plyr.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+    <!-- full calendar -->
+    <link rel="stylesheet" href="assets/css/full-calendar.css">
+    <!-- jquery Ui -->
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+    <!-- editor quill Ui -->
+    <link rel="stylesheet" href="assets/css/editor-quill.css">
+    <!-- apex charts Css -->
+    <link rel="stylesheet" href="assets/css/apexcharts.css">
+    <!-- calendar Css -->
+    <link rel="stylesheet" href="assets/css/calendar.css">
+    <!-- jvector map Css -->
+    <link rel="stylesheet" href="assets/css/jquery-jvectormap-2.0.5.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head> 
+<body>
+    
+<!--==================== Preloader Start ====================-->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+<!--==================== Preloader End ====================-->
+
+<!--==================== Sidebar Overlay End ====================-->
+<div class="side-overlay"></div>
+<!--==================== Sidebar Overlay End ====================-->
+
+<!-- ============================ Sidebar Start ============================ -->
+<aside class="sidebar">
+    <!-- sidebar close btn -->
+     <button type="button" class="sidebar-close-btn text-gray-500 hover-text-white hover-bg-main-600 text-md w-24 h-24 border border-gray-100 hover-border-main-600 d-xl-none d-flex flex-center rounded-circle position-absolute"><i class="ph ph-x"></i></button>
+    <!-- sidebar close btn -->
+    
+     <a href="index.html" class="sidebar__logo text-center p-20 position-sticky inset-block-start-0 bg-white w-100 z-1 pb-10">
+        <img src="assets/images/logopanjang.png" alt="Logo" style="width: 100px; height: auto;">
+    </a>
+
+    <div class="sidebar-menu-wrapper overflow-y-auto scroll-sm">
+        <div class="p-20 pt-10">
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu__item">
+                    <a href="index.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-squares-four" ></i></span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="/kelolapelanggan" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-standard-definition" ></i></span>
+                        <span class="text">Kelola Pelanggan</span>
+                    </a>
+                </li> 
+                <li class="sidebar-menu__item">
+                    <a href="/kelolatransaksi" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-shopping-cart"></i></span>
+                        <span class="text">Kelola Transaksi</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <span class="text-gray-300 text-sm px-20 pt-20 fw-semibold border-top border-gray-100 d-block text-uppercase">Settings</span>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="setting.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-gear"></i></span>
+                        <span class="text">Account Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>    
+<!-- ============================ Sidebar End  ============================ -->
+
+<div class="dashboard-main-wrapper">
+    <div class="top-navbar flex-between gap-16">
+        <div class="flex-align gap-16">
+            <!-- Toggle Button Start -->
+             <button type="button" class="toggle-btn d-xl-none d-flex text-26 text-gray-500"><i class="ph ph-list"></i></button>
+            <!-- Toggle Button End -->
+            
+            <form action="#" class="w-350 d-sm-block d-none">
+                <div class="position-relative">
+                    <button type="submit" class="input-icon text-xl d-flex text-gray-100 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
+                    <input type="text" class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Search...">
+                </div>
+            </form>
+        </div>
+
+        <div class="flex-align gap-16">
+            <div class="flex-align gap-8">
+                <!-- Notification Start -->
+                <div class="dropdown">
+                    <button class="dropdown-btn shaking-animation text-gray-500 w-40 h-40 bg-main-50 hover-bg-main-100 transition-2 rounded-circle text-xl flex-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="position-relative">
+                            <i class="ph ph-bell"></i>
+                            <span class="alarm-notify position-absolute end-0"></span>
+                        </span>
+                    </button>
+                </div>
+                <!-- Notification End -->
+            </div>
+
+            <!-- User Profile Start -->
+            <div class="dropdown">
+                <button class="users arrow-down-icon border border-gray-200 rounded-pill p-4 d-inline-block pe-40 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="position-relative">
+                        <img src="assets/images/PP.png" alt="Image" class="h-32 w-32 rounded-circle">
+                        <span class="activation-badge w-8 h-8 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                    </span>
+                </button>
+            </div>
+            <!-- User Profile End -->
+        </div>
+    </div>
+
+    <!-- ============================ Content  ============================ -->
+    <div class="dashboard-body">
+        <div class="breadcrumb-with-buttons mb-24 flex-between flex-wrap gap-8">
+            <!-- Breadcrumb Start -->
+            <div class="breadcrumb mb-24">
+                <ul class="flex-align gap-4">
+                    <li><a href="index.html" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+                    <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+                    <li><span class="text-main-600 fw-normal text-15">Tambah Pelanggan</span></li>
+                </ul>
+            </div>
+            <!-- Breadcrumb End -->
+        </div>
+        
+        <!-- Course Tab Start -->
+        <div class="card">
+            <div class="card-body">
+                <form id="addCustomerForm">
+                    <div class="row gy-20">
+                        <div class="col-xxl-3 col-md-4 col-sm-5">
+                            <div class="mb-20">
+                                <label class="h5 fw-semibold font-heading mb-0">Thumbnail Image <span class="text-13 text-gray-400 fw-medium">(Optional)</span></label>
+                            </div>
+                            <div id="fileUpload" class="fileUpload image-upload"></div>
+                        </div>
+                        <div class="col-xxl-9 col-md-8 col-sm-7">
+                            <div class="row g-20">
+                                <div class="col-sm-12">
+                                    <label for="customerName" class="h5 mb-8 fw-semibold font-heading">Nama Instansi <span class="text-13 text-gray-400 fw-medium">(Required)</span></label>
+                                    <div class="position-relative">
+                                        <input type="text" name="name" id="customerName" class="form-control py-11" placeholder="Nama Instansi" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label for="customerContact" class="h5 mb-8 fw-semibold font-heading">Nomor Telepon <span class="text-13 text-gray-400 fw-medium">(Optional)</span></label>
+                                    <div class="position-relative">
+                                        <input type="text" name="contact" id="customerContact" class="form-control py-11" placeholder="Nomor Telepon">
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label for="customerAddress" class="h5 mb-8 fw-semibold font-heading">Alamat <span class="text-13 text-gray-400 fw-medium">(Optional)</span></label>
+                                    <div class="position-relative">
+                                        <input type="text" name="address" id="customerAddress" class="form-control py-11" placeholder="Alamat">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="customerType" class="h5 mb-8 fw-semibold font-heading">Kategori <span class="text-13 text-gray-400 fw-medium">(Required)</span></label>
+                                    <div class="position-relative">
+                                        <select name="type" id="customerType" class="form-select py-9" required>
+                                            <option value="" disabled selected>Pilih Kategori</option>
+                                            <option value="PAUD">PAUD</option>
+                                            <option value="TK">TK</option>
+                                            <option value="SD">SD</option>
+                                            <option value="TPQ">TPQ</option>
+                                            <option value="Lainnya">Lainnya</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Response Message Area -->
+                                <div id="responseMessage" class="col-12"></div>
+                                
+                                <!-- Buttons -->
+                                <div class="col-12">
+                                    <div class="flex-align justify-content-end gap-8">
+                                        <a href="/kelolapelanggan" class="btn btn-outline-main rounded-pill py-9">Cancel</a>
+                                        <button type="submit" class="btn btn-main rounded-pill py-9">Simpan Pelanggan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Course Tab End -->
+    </div>
+    <!-- Footer -->
+         <div class="dashboard-footer">
+            <div class="flex-between flex-wrap gap-16">
+                <p class="text-gray-300 text-13 fw-normal"> &copy; Copyright diOlif 2025, All Right Reserverd</p>
+                <div class="flex-align flex-wrap gap-16">
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">License</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">More Themes</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Documentation</a>
+                    <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Support</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+<!-- Scripts -->
+<!-- Jquery js -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap Bundle Js -->
+<script src="assets/js/boostrap.bundle.min.js"></script>
+<!-- Phosphor Js -->
+<script src="assets/js/phosphor-icon.js"></script>
+<!-- file upload -->
+<script src="assets/js/file-upload.js"></script>
+<!-- file upload -->
+<script src="assets/js/plyr.js"></script>
+<!-- dataTables -->
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+<!-- full calendar -->
+<script src="assets/js/full-calendar.js"></script>
+<!-- jQuery UI -->
+<script src="assets/js/jquery-ui.js"></script>
+<!-- jQuery UI -->
+<script src="assets/js/editor-quill.js"></script>
+<!-- apex charts -->
+<script src="assets/js/apexcharts.min.js"></script>
+<!-- Calendar Js -->
+<script src="assets/js/calendar.js"></script>
+<!-- jvectormap Js -->
+<script src="assets/js/jquery-jvectormap-2.0.5.min.js"></script>
+<!-- jvectormap world Js -->
+<script src="assets/js/jquery-jvectormap-world-mill-en.js"></script>
+<!-- main js -->
+<script src="assets/js/main.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    setupFormSubmission();
+});
+
+// Setup form submission
+function setupFormSubmission() {
+    const form = document.getElementById('addCustomerForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validasi form utama
+        const name = form.name.value.trim();
+        const type = form.type.value;
+        const contact = form.contact.value.trim();
+        const address = form.address.value.trim();
+        
+        if (!name || !type) {
+            showMessage('Nama instansi dan kategori harus diisi!', 'error');
+            return;
+        }
+        
+        // Siapkan data untuk dikirim (tanpa uniforms)
+        const customerData = {
+            name: name,
+            type: type,
+            contact: contact || '',
+            address: address || ''
+        };
+        
+        console.log('Data yang akan dikirim:', customerData); // Debug log
+        
+        // Kirim ke API
+        submitCustomer(customerData);
+    });
+}
+
+// Submit data customer ke backend
+function submitCustomer(data) {
+    const submitBtn = document.querySelector('#addCustomerForm button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="ph ph-spinner-gap spin"></i> Menyimpan...';
+    
+    fetch('/api/customers', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(async response => {
+        console.log('Response status:', response.status); // Debug log
+        
+        if (response.ok) {
+            const result = await response.json();
+            console.log('Success result:', result); // Debug log
+            showMessage('Pelanggan berhasil ditambahkan!', 'success');
+            
+            // Redirect ke halaman kelola pelanggan setelah 2 detik
+            setTimeout(() => {
+                window.location.href = '/kelolapelanggan';
+            }, 2000);
+        } else {
+            const errorText = await response.text();
+            console.error('Error response:', errorText); // Debug log
+            throw new Error(errorText || 'Gagal menambahkan pelanggan');
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error); // Debug log
+        showMessage('Gagal menambahkan pelanggan: ' + error.message, 'error');
+    })
+    .finally(() => {
+        // Reset button
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    });
+}
+
+// Show response message
+function showMessage(message, type) {
+    const messageDiv = document.getElementById('responseMessage');
+    const alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+    const iconClass = type === 'success' ? 'ph-check-circle' : 'ph-warning-circle';
+    
+    messageDiv.innerHTML = `
+        <div class="alert ${alertClass} d-flex align-items-center" role="alert">
+            <i class="ph ${iconClass} me-2"></i>
+            ${message}
+        </div>
+    `;
+    
+    // Auto hide after 5 seconds for error messages
+    if (type === 'error') {
+        setTimeout(() => {
+            messageDiv.innerHTML = '';
+        }, 5000);
+    }
+}
+
+// Add CSS for spinner animation
+const style = document.createElement('style');
+style.textContent = `
+    .spin {
+        animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>

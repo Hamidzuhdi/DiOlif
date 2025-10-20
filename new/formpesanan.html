@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title> DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- file upload -->
+    <link rel="stylesheet" href="assets/css/file-upload.css">
+    <!-- file upload -->
+    <link rel="stylesheet" href="assets/css/plyr.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+    <!-- full calendar -->
+    <link rel="stylesheet" href="assets/css/full-calendar.css">
+    <!-- jquery Ui -->
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
+    <!-- editor quill Ui -->
+    <link rel="stylesheet" href="assets/css/editor-quill.css">
+    <!-- apex charts Css -->
+    <link rel="stylesheet" href="assets/css/apexcharts.css">
+    <!-- calendar Css -->
+    <link rel="stylesheet" href="assets/css/calendar.css">
+    <!-- jvector map Css -->
+    <link rel="stylesheet" href="assets/css/jquery-jvectormap-2.0.5.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head> 
+<body>
+    
+<!--==================== Preloader Start ====================-->
+  <div class="preloader">
+    <div class="loader"></div>
+  </div>
+<!--==================== Preloader End ====================-->
+
+<!--==================== Sidebar Overlay End ====================-->
+<div class="side-overlay"></div>
+<!--==================== Sidebar Overlay End ====================-->
+
+    <!-- ============================ Sidebar Start ============================ -->
+<aside class="sidebar">
+    <!-- sidebar close btn -->
+     <button type="button" class="sidebar-close-btn text-gray-500 hover-text-white hover-bg-main-600 text-md w-24 h-24 border border-gray-100 hover-border-main-600 d-xl-none d-flex flex-center rounded-circle position-absolute"><i class="ph ph-x"></i></button>
+    <!-- sidebar close btn -->
+    
+     <a href="index.html" class="sidebar__logo text-center p-20 position-sticky inset-block-start-0 bg-white w-100 z-1 pb-10">
+    <img src="assets/images/logopanjang.png" alt="Logo" style="width: 100px; height: auto;">
+</a>
+
+    <div class="sidebar-menu-wrapper overflow-y-auto scroll-sm">
+        <div class="p-20 pt-10">
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu__item">
+                    <a href="index.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-squares-four" ></i></span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="/kelolapelanggan" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-standard-definition" ></i></span>
+                        <span class="text">Kelola Pelanggan</span>
+                    </a>
+                </li> 
+                <li class="sidebar-menu__item">
+                    <a href="/kelolatransaksi" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-shopping-cart"></i></span>
+                        <span class="text">Kelola Transaksi</span>
+                    </a>
+                </li>
+                
+                <li class="sidebar-menu__item">
+                    <span class="text-gray-300 text-sm px-20 pt-20 fw-semibold border-top border-gray-100 d-block text-uppercase">Settings</span>
+                </li>
+                
+                <li class="sidebar-menu__item">
+                    <a href="setting.html" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-gear"></i></span>
+                        <span class="text">Account Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>    
+<!-- ============================ Sidebar End  ============================ -->
+
+    <div class="dashboard-main-wrapper">
+        <div class="top-navbar flex-between gap-16">
+    <div class="flex-align gap-16">
+        <!-- Toggle Button Start -->
+         <button type="button" class="toggle-btn d-xl-none d-flex text-26 text-gray-500"><i class="ph ph-list"></i></button>
+        <!-- Toggle Button End -->
+        
+        <form action="#" class="w-350 d-sm-block d-none">
+            <div class="position-relative">
+                <button type="submit" class="input-icon text-xl d-flex text-gray-100 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
+                <input type="text" class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Search...">
+            </div>
+        </form>
+    </div>
+
+    <div class="flex-align gap-16">
+        <div class="flex-align gap-8">
+            <!-- Notification Start -->
+            <div class="dropdown">
+                <button class="dropdown-btn shaking-animation text-gray-500 w-40 h-40 bg-main-50 hover-bg-main-100 transition-2 rounded-circle text-xl flex-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="position-relative">
+                        <i class="ph ph-bell"></i>
+                        <span class="alarm-notify position-absolute end-0"></span>
+                    </span>
+                </button>
+                <div class="dropdown-menu dropdown-menu--lg border-0 bg-transparent p-0">
+                    <div class="card border border-gray-100 rounded-12 box-shadow-custom p-0 overflow-hidden">
+                        <div class="card-body p-0">
+                            <div class="py-8 px-24 bg-main-600">
+                                <div class="flex-between">
+                                    <h5 class="text-xl fw-semibold text-white mb-0">Notifications</h5>
+                                    <div class="flex-align gap-12">
+                                        <button type="button" class="bg-white rounded-6 text-sm px-8 py-2 hover-text-primary-600"> New </button>
+                                        <button type="button" class="close-dropdown hover-scale-1 text-xl text-white"><i class="ph ph-x"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Notification Start -->
+        </div>
+
+        <!-- User Profile Start -->
+        <div class="dropdown">
+            <button class="users arrow-down-icon border border-gray-200 rounded-pill p-4 d-inline-block pe-40 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="position-relative">
+                    <img src="assets/images/PP.png" alt="Image" class="h-32 w-32 rounded-circle">
+                    <span class="activation-badge w-8 h-8 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                </span>
+            </button>
+            <div class="dropdown-menu dropdown-menu--lg border-0 bg-transparent p-0">
+                <div class="card border border-gray-100 rounded-12 box-shadow-custom">
+                    <div class="card-body">
+                        <div class="flex-align gap-8 mb-20 pb-20 border-bottom border-gray-100">
+                            <img src="assets/images/PP.png" alt="" class="w-54 h-54 rounded-circle">
+                            <div class="">
+                                <h4 class="mb-0">Melly R</h4>
+                                <p class="fw-medium text-13 text-gray-200">mellyr@mail.com</p>
+                            </div>
+                        </div>
+                        <ul class="max-h-270 overflow-y-auto scroll-sm pe-4">
+                            <li class="mb-4">
+                                <a href="setting.html" class="py-12 text-15 px-20 hover-bg-gray-50 text-gray-300 rounded-8 flex-align gap-8 fw-medium text-15">
+                                    <span class="text-2xl text-primary-600 d-flex"><i class="ph ph-gear"></i></span>
+                                    <span class="text">Pengaturan</span>
+                                </a>
+                            </li>
+                            
+                            <li class="pt-8 border-top border-gray-100">
+                                <a href="login.html" class="py-12 text-15 px-20 hover-bg-danger-50 text-gray-300 hover-text-danger-600 rounded-8 flex-align gap-8 fw-medium text-15">
+                                    <span class="text-2xl text-danger-600 d-flex"><i class="ph ph-sign-out"></i></span>
+                                    <span class="text">Log Out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User Profile Start -->
+    </div>
+</div>
+
+<!-- ============================ Content  ============================ -->
+<div class="dashboard-body">
+    
+    <!-- Breadcrumb Start -->
+     <div class="breadcrumb mb-24">
+        <ul class="flex-align gap-4">
+            <li><a href="index.html" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+            <li><span class="text-gray-200 fw-normal text-15 hover-text-main-600">Kelola Transaksi</span></li>
+            <li> <span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span> </li>
+            <li><span class="text-main-600 fw-normal text-15">Tambah Pesanan</span></li>
+        </ul>
+    </div>
+    <!-- Breadcrumb End -->
+     
+    <!-- Course Tab Start -->
+    <div class="card">
+        <div class="card-header border-bottom border-gray-100 flex-align gap-8">
+            <h5 class="mb-0">Buat Pesanan (Form per Anak)</h5>
+        </div>
+
+        <div class="card-body">
+            <form id="formPesanan">
+                <div class="row gy-20">
+                    <div class="col-12">
+                        <div class="row g-20">
+                            <!-- Nama Pelanggan -->
+                            <div class="col-sm-12">
+                                <label for="courseCategory" class="h5 mb-8 fw-semibold font-heading">Nama Pelanggan</label>
+                                <div class="position-relative">
+                                    <select id="courseCategory" class="form-select py-12 placeholder-13 text-15" required>
+                                        <option value="" disabled selected>Pilih Pelanggan</option>
+                                    </select>                                            
+                                </div>
+                            </div>
+
+                            <!-- Tanggal Order -->
+                            <div class="col-sm-4">
+                                <label for="tanggalOrder" class="h5 mb-8 fw-semibold font-heading">Tanggal Order</label>
+                                <input type="date" id="tanggalOrder" class="form-control py-12 placeholder-13 text-15" required>
+                            </div>
+
+                            <!-- Tanggal Target Selesai -->
+                            <div class="col-sm-4">
+                                <label for="tanggalSelesai" class="h5 mb-8 fw-semibold font-heading">Target Selesai</label>
+                                <input type="date" id="tanggalSelesai" class="form-control py-12 placeholder-13 text-15" required>
+                            </div>
+
+                            <!-- Status Pembayaran -->
+                            <div class="col-sm-4">
+                                <label for="statusPembayaran" class="h5 mb-8 fw-semibold font-heading">Status Pembayaran</label>
+                                <select id="statusPembayaran" class="form-select py-12 placeholder-13 text-15" required>
+                                    <option value="" disabled selected>Pilih Status</option>
+                                    <option value="paid">Lunas</option>
+                                    <option value="pending">DP</option>
+                                    <option value="cancelled">Batal</option>
+                                </select>
+                            </div>
+
+                            <!-- Notes Transaksi -->
+                            <div class="col-sm-12">
+                                <label for="notesTransaksi" class="h5 mb-8 fw-semibold font-heading">Catatan Transaksi</label>
+                                <textarea id="notesTransaksi" class="form-control py-12 placeholder-13 text-15" rows="3" placeholder="Masukkan catatan transaksi (opsional)"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trigger Modal Button -->
+                <div class="mt-20">
+                    <button type="button" class="btn btn-main rounded-pill py-9" data-bs-toggle="modal" data-bs-target="#modalTambahPesanan">
+                        <i class="ph ph-plus"></i> Tambah Item Pesanan
+                    </button>
+                </div>
+
+                <!-- PERBAIKAN: Tambahkan tabel untuk menampilkan order items -->
+                <div class="mt-20">
+                    <table id="studentTable" class="table table-bordered table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th class="h6 text-gray-300 text-center">NO</th>
+                                <th class="h6 text-gray-300 text-center">Nama Siswa</th>
+                                <th class="h6 text-gray-300 text-center">Kelas</th>
+                                <th class="h6 text-gray-300 text-center">Pesanan</th>
+                                <th class="h6 text-gray-300 text-center">Ukuran</th>
+                                <th class="h6 text-gray-300 text-center">Jumlah</th>
+                                <th class="h6 text-gray-300 text-center">Harga</th>
+                                <th class="h6 text-gray-300 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mt-20 text-end">
+                    <button type="button" class="btn btn-outline-main bg-main-100 border-main-100 text-main-600 rounded-pill py-9" onclick="resetForm()">Reset</button>
+                    <button type="submit" class="btn btn-main rounded-pill py-9">Buat Transaksi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PERBAIKAN: Tambahkan Modal dengan struktur yang benar -->
+    <div class="modal fade" id="modalTambahPesanan" tabindex="-1" aria-labelledby="modalTambahPesananLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content p-4">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="modalTambahPesananLabel">Tambah Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Container untuk daftar item -->
+                    <div id="itemContainer" class="mb-3 mt-20">
+                        <div class="row g-3 align-items-end mb-4 item-row">
+                            <div class="col-md-2">
+                                <label class="form-label text-center d-block">Nama Siswa</label>
+                                <input type="text" name="namaSiswa[]" class="form-control" style="height: 47px;" placeholder="Nama siswa" required>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <label class="form-label text-center d-block">Kelas</label>
+                                <input type="text" name="kelas[]" class="form-control" style="height: 47px;" placeholder="Kelas" required>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label text-center d-block">Pesanan</label>
+                                <select class="form-select" name="baju[]" style="height: 47px;" required>
+                                    <option value="">Pilih Baju</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label text-center d-block">Ukuran</label>
+                                <select class="form-select" name="ukuran[]" style="height: 47px;" required>
+                                    <option value="">Pilih Ukuran</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-1">
+                                <label class="form-label text-center d-block">Jumlah</label>
+                                <input type="number" name="jumlah[]" class="form-control" style="height: 47px;" min="1" value="1" required>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label class="form-label text-center d-block">Harga</label>
+                                <input type="text" class="form-control harga-input" style="height: 47px;" readonly>
+                            </div>
+
+                            <div class="col-md-1">
+                                <label class="form-label text-center d-block">&nbsp;</label>
+                                <button type="button" class="btn btn-danger btn-sm w-100" onclick="removeItem(this)" style="height: 47px;">
+                                    <i class="ph ph-x"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <button type="button" id="tambahItem" class="btn btn-outline-main">+ Tambah Item</button>
+                    </div>
+                    
+                    <div class="modal-footer border-0 pt-20">
+                        <div class="d-flex justify-content-between w-100 align-items-center">
+                            <div>
+                                <strong>Total Harga: Rp <span id="totalHarga">0</span></strong>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" id="simpanPesanan" class="btn btn-main">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dashboard-footer">
+        <div class="flex-between flex-wrap gap-16">
+            <p class="text-gray-300 text-13 fw-normal"> © Copyright diOlif 2025, All Rights Reserved</p>
+            <div class="flex-align flex-wrap gap-16">
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">License</a>
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">More Themes</a>
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Documentation</a>
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery js -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap Bundle Js -->
+<script src="assets/js/boostrap.bundle.min.js"></script>
+<!-- Phosphor Js -->
+<script src="assets/js/phosphor-icon.js"></script>
+<!-- file upload -->
+<script src="assets/js/file-upload.js"></script>
+<!-- file upload -->
+<script src="assets/js/plyr.js"></script>
+<!-- dataTables -->
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+<!-- full calendar -->
+<script src="assets/js/full-calendar.js"></script>
+<!-- jQuery UI -->
+<script src="assets/js/jquery-ui.js"></script>
+<!-- jQuery UI -->
+<script src="assets/js/editor-quill.js"></script>
+<!-- apex charts -->
+<script src="assets/js/apexcharts.min.js"></script>
+<!-- Calendar Js -->
+<script src="assets/js/calendar.js"></script>
+<!-- jvectormap Js -->
+<script src="assets/js/jquery-jvectormap-2.0.5.min.js"></script>
+<!-- jvectormap world Js -->
+<script src="assets/js/jquery-jvectormap-world-mill-en.js"></script>
+<!-- Flatpickr -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
+<!-- main js -->
+<script src="assets/js/main.js"></script>
+
+<script>
+// Global variables
+let customerUniforms = [];
+let selectedCustomerID = null;
+let orderItems = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadCustomers();
+    initializeDatePickers();
+    
+    // Handle customer selection change
+    document.getElementById('courseCategory').addEventListener('change', function() {
+        selectedCustomerID = this.value;
+        if (selectedCustomerID) {
+            loadCustomerUniforms(selectedCustomerID);
+        }
+    });
+
+    // Handle form submission
+    document.getElementById('formPesanan').addEventListener('submit', function(e) {
+        e.preventDefault();
+        submitStudentTransaction();
+    });
+
+    // Handle tambah item button
+    document.getElementById('tambahItem').addEventListener('click', addNewItem);
+    
+    // Handle simpan pesanan
+    document.getElementById('simpanPesanan').addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addItemToOrder();
+    });
+});
+
+// Load customers untuk dropdown
+function loadCustomers() {
+    fetch('/api/customers')
+        .then(res => res.json())
+        .then(customers => {
+            const select = document.getElementById('courseCategory');
+            select.innerHTML = '<option value="" disabled selected>Pilih Pelanggan</option>';
+            
+            customers.forEach(customer => {
+                const option = new Option(`${customer.name} (${customer.type})`, customer.id);
+                select.add(option);
+            });
+        })
+        .catch(err => {
+            console.error('Error loading customers:', err);
+            showAlert('Gagal memuat data pelanggan', 'danger');
+        });
+}
+
+// Load customer uniforms
+function loadCustomerUniforms(customerID) {
+    fetch(`/api/customers/${customerID}/uniforms`)
+        .then(res => res.json())
+        .then(uniforms => {
+            customerUniforms = uniforms;
+            updateUniformDropdowns();
+        })
+        .catch(err => {
+            console.error('Error loading uniforms:', err);
+            customerUniforms = [];
+            showAlert('Pelanggan belum memiliki data seragam', 'warning');
+        });
+}
+
+// Update uniform dropdowns
+function updateUniformDropdowns() {
+    const uniformSelects = document.querySelectorAll('select[name="baju[]"]');
+    
+    uniformSelects.forEach(select => {
+        const currentValue = select.value;
+        select.innerHTML = '<option value="">Pilih Baju</option>';
+        
+        const uniqueUniforms = [...new Set(customerUniforms.map(u => u.uniform_name))];
+        uniqueUniforms.forEach(uniform => {
+            const option = new Option(uniform, uniform);
+            if (uniform === currentValue) option.selected = true;
+            select.add(option);
+        });
+        
+        // Remove existing event listeners to prevent duplicates
+        select.removeEventListener('change', handleUniformChange);
+        select.addEventListener('change', handleUniformChange);
+    });
+}
+
+function handleUniformChange(e) {
+    updateSizeDropdown(e.target);
+}
+
+// Update size dropdown berdasarkan uniform yang dipilih
+function updateSizeDropdown(uniformSelect) {
+    const row = uniformSelect.closest('.item-row');
+    const sizeSelect = row.querySelector('select[name="ukuran[]"]');
+    const priceInput = row.querySelector('.harga-input');
+    const quantityInput = row.querySelector('input[name="jumlah[]"]');
+    
+    const selectedUniform = uniformSelect.value;
+    sizeSelect.innerHTML = '<option value="">Pilih Ukuran</option>';
+    
+    if (selectedUniform) {
+        const sizesForUniform = customerUniforms.filter(u => u.uniform_name === selectedUniform);
+        sizesForUniform.forEach(item => {
+            const option = new Option(`${item.size} - Rp ${formatCurrency(item.price)}`, item.size);
+            option.setAttribute('data-price', item.price);
+            sizeSelect.add(option);
+        });
+        
+        // Remove existing event listeners to prevent duplicates
+        sizeSelect.removeEventListener('change', handleSizeChange);
+        quantityInput.removeEventListener('input', handleQuantityChange);
+        
+        sizeSelect.addEventListener('change', handleSizeChange);
+        quantityInput.addEventListener('input', handleQuantityChange);
+    }
+    
+    // Reset price
+    priceInput.value = 'Rp 0';
+    updateModalTotal();
+}
+
+function handleSizeChange(e) {
+    updatePrice(e.target.closest('.item-row'));
+}
+
+function handleQuantityChange(e) {
+    updatePrice(e.target.closest('.item-row'));
+}
+
+// Update price berdasarkan size dan quantity
+function updatePrice(row) {
+    const sizeSelect = row.querySelector('select[name="ukuran[]"]');
+    const quantityInput = row.querySelector('input[name="jumlah[]"]');
+    const priceInput = row.querySelector('.harga-input');
+    
+    const selectedOption = sizeSelect.options[sizeSelect.selectedIndex];
+    if (selectedOption && selectedOption.value) {
+        const unitPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+        const quantity = parseInt(quantityInput.value) || 1;
+        const totalPrice = unitPrice * quantity;
+        
+        priceInput.value = `Rp ${formatCurrency(totalPrice)}`;
+    } else {
+        priceInput.value = 'Rp 0';
+    }
+    
+    updateModalTotal();
+}
+
+// Update total di modal
+function updateModalTotal() {
+    const priceInputs = document.querySelectorAll('.harga-input');
+    let total = 0;
+    
+    priceInputs.forEach(input => {
+        const value = input.value.replace(/[^\d]/g, '');
+        total += parseFloat(value) || 0;
+    });
+    
+    const totalElement = document.getElementById('totalHarga');
+    if (totalElement) {
+        totalElement.textContent = formatCurrency(total);
+    }
+}
+
+// Add new item row
+function addNewItem() {
+    const container = document.getElementById('itemContainer');
+    const row = document.createElement('div');
+    row.className = 'row g-3 align-items-end mb-4 item-row';
+    
+    row.innerHTML = `
+        <div class="col-md-2">
+            <input type="text" name="namaSiswa[]" class="form-control" style="height: 47px;" placeholder="Nama siswa" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" name="kelas[]" class="form-control" style="height: 47px;" placeholder="Kelas" required>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="baju[]" style="height: 47px;" required>
+                <option value="">Pilih Baju</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select" name="ukuran[]" style="height: 47px;" required>
+                <option value="">Pilih Ukuran</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <input type="number" name="jumlah[]" class="form-control" style="height: 47px;" min="1" value="1" required>
+        </div>
+        <div class="col-md-2">
+            <input type="text" class="form-control harga-input" style="height: 47px;" readonly>
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-danger btn-sm w-100" onclick="removeItem(this)" style="height: 47px;">
+                <i class="ph ph-x"></i>
+            </button>
+        </div>
+    `;
+    
+    container.appendChild(row);
+    updateUniformDropdowns();
+}
+
+// Remove item row
+function removeItem(button) {
+    const itemRow = button.closest('.item-row');
+    if (itemRow) {
+        itemRow.remove();
+        updateModalTotal();
+    }
+}
+
+// Add item to order list
+function addItemToOrder() {
+    try {
+        const itemRows = document.querySelectorAll('.item-row');
+        let hasValidItems = false;
+        let tempItems = [];
+        
+        itemRows.forEach(row => {
+            const namaSiswaInput = row.querySelector('input[name="namaSiswa[]"]');
+            const kelasInput = row.querySelector('input[name="kelas[]"]');
+            const uniformSelect = row.querySelector('select[name="baju[]"]');
+            const sizeSelect = row.querySelector('select[name="ukuran[]"]');
+            const quantityInput = row.querySelector('input[name="jumlah[]"]');
+            
+            if (namaSiswaInput && kelasInput && uniformSelect && sizeSelect && quantityInput &&
+                namaSiswaInput.value && kelasInput.value && uniformSelect.value && sizeSelect.value && quantityInput.value) {
+                
+                const selectedSizeOption = sizeSelect.options[sizeSelect.selectedIndex];
+                const unitPrice = parseFloat(selectedSizeOption.getAttribute('data-price')) || 0;
+                
+                tempItems.push({
+                    student_name: namaSiswaInput.value,
+                    grade: kelasInput.value,
+                    uniform_name: uniformSelect.value,
+                    size: sizeSelect.value,
+                    quantity: parseInt(quantityInput.value),
+                    unit_price: unitPrice,
+                    notes: ''
+                });
+                
+                hasValidItems = true;
+            }
+        });
+        
+        if (hasValidItems) {
+            orderItems.push(...tempItems);
+            displayOrderItems();
+            
+            // Tutup modal dengan penanganan yang lebih robust
+            setTimeout(() => {
+                const modalElement = document.getElementById('modalTambahPesanan');
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                } else {
+                    modalElement.classList.remove('show');
+                    modalElement.style.display = 'none';
+                    document.body.classList.remove('modal-open');
+                    const backdrop = document.querySelector('.modal-backdrop');
+                    if (backdrop) backdrop.remove();
+                }
+                
+                // Reset modal form
+                resetModalForm();
+            }, 100);
+        } else {
+            showAlert('Lengkapi semua field untuk setiap item', 'warning');
+        }
+    } catch (error) {
+        console.error('Error in addItemToOrder:', error);
+        showAlert('Terjadi kesalahan saat menambah item', 'danger');
+    }
+}
+
+// Display order items in table
+function displayOrderItems() {
+    const tbody = document.querySelector('#studentTable tbody');
+    if (!tbody) {
+        console.error('Table body not found');
+        return;
+    }
+    
+    tbody.innerHTML = '';
+    
+    orderItems.forEach((item, index) => {
+        const row = `
+            <tr>
+                <td class="text-center">${index + 1}</td>
+                <td class="text-center">${item.student_name}</td>
+                <td class="text-center">${item.grade}</td>
+                <td class="text-center">${item.uniform_name}</td>
+                <td class="text-center">${item.size}</td>
+                <td class="text-center">${item.quantity}</td>
+                <td class="text-center">Rp ${formatCurrency(item.unit_price * item.quantity)}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger remove-order-btn" data-index="${index}">
+                        <i class="ph ph-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+    
+    // Add event listeners untuk remove buttons
+    document.querySelectorAll('.remove-order-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.getAttribute('data-index'));
+            removeOrderItem(index);
+        });
+    });
+}
+
+// Remove order item
+function removeOrderItem(index) {
+    orderItems.splice(index, 1);
+    displayOrderItems();
+}
+
+// Submit student transaction
+function submitStudentTransaction() {
+    if (!selectedCustomerID) {
+        showAlert('Pilih pelanggan terlebih dahulu', 'warning');
+        return;
+    }
+
+    if (orderItems.length === 0) {
+        showAlert('Tambahkan minimal satu item pesanan', 'warning');
+        return;
+    }
+
+    const tanggalOrder = document.getElementById('tanggalOrder').value;
+    const tanggalSelesai = document.getElementById('tanggalSelesai').value;
+    const status = document.getElementById('statusPembayaran').value;
+    const notes = document.getElementById('notesTransaksi').value;
+
+    const transactionData = {
+        customer_id: parseInt(selectedCustomerID),
+        transaction_date: tanggalOrder,
+        payment_date: tanggalSelesai,
+        status: status,
+        notes: notes,
+        items: orderItems
+    };
+
+    console.log('Sending transaction data:', transactionData);
+
+    fetch('/api/transactions/student', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(transactionData)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error('Failed to create transaction');
+        return res.json();
+    })
+    .then(data => {
+        console.log('Transaction created:', data);
+        showAlert('Transaksi berhasil dibuat!', 'success');
+        setTimeout(() => {
+            window.location.href = '/kelolatransaksi';
+        }, 2000);
+    })
+    .catch(err => {
+        console.error('Error creating transaction:', err);
+        showAlert('Gagal membuat transaksi: ' + err.message, 'danger');
+    });
+}
+
+// Reset modal form
+function resetModalForm() {
+    const container = document.getElementById('itemContainer');
+    container.innerHTML = `
+        <div class="row g-3 align-items-end mb-4 item-row">
+            <div class="col-md-2">
+                <label class="form-label text-center d-block">Nama Siswa</label>
+                <input type="text" name="namaSiswa[]" class="form-control" style="height: 47px;" placeholder="Nama siswa" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label text-center d-block">Kelas</label>
+                <input type="text" name="kelas[]" class="form-control" style="height: 47px;" placeholder="Kelas" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label text-center d-block">Pesanan</label>
+                <select class="form-select" name="baju[]" style="height: 47px;" required>
+                    <option value="">Pilih Baju</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label text-center d-block">Ukuran</label>
+                <select class="form-select" name="ukuran[]" style="height: 47px;" required>
+                    <option value="">Pilih Ukuran</option>
+                </select>
+            </div>
+            <div class="col-md-1">
+                <label class="form-label text-center d-block">Jumlah</label>
+                <input type="number" name="jumlah[]" class="form-control" style="height: 47px;" min="1" value="1" required>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label text-center d-block">Harga</label>
+                <input type="text" class="form-control harga-input" style="height: 47px;" readonly>
+            </div>
+            <div class="col-md-1">
+                <label class="form-label text-center d-block">&nbsp;</label>
+                <button type="button" class="btn btn-danger btn-sm w-100" onclick="removeItem(this)" style="height: 47px;">
+                    <i class="ph ph-x"></i>
+                </button>
+            </div>
+        </div>
+    `;
+    updateUniformDropdowns();
+    updateModalTotal();
+}
+
+// Reset form
+function resetForm() {
+    document.getElementById('formPesanan').reset();
+    document.getElementById('notesTransaksi').value = '';
+    orderItems = [];
+    displayOrderItems();
+    selectedCustomerID = null;
+    customerUniforms = [];
+    resetModalForm();
+}
+
+// Initialize date pickers
+function initializeDatePickers() {
+    const today = new Date().toISOString().split('T')[0];
+    const tanggalOrderElement = document.getElementById('tanggalOrder');
+    if (tanggalOrderElement) {
+        tanggalOrderElement.value = today;
+    }
+}
+
+// Format currency
+function formatCurrency(amount) {
+    if (!amount || amount === 0) return '0';
+    return parseInt(amount).toLocaleString('id-ID');
+}
+
+// Alert system
+function showAlert(message, type) {
+    const existingAlerts = document.querySelectorAll('.alert-custom');
+    existingAlerts.forEach(alert => alert.remove());
+    
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed alert-custom`;
+    alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(alertDiv);
+    
+    setTimeout(() => {
+        if (alertDiv && alertDiv.parentNode) {
+            alertDiv.parentNode.removeChild(alertDiv);
+        }
+    }, 5000);
+}
+</script>
+</body>
+</html>

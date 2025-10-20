@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title -->
+    <title>Dashboard - DiOlif FASHION</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="assets/images/icon.png">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head> 
+<body>
+    
+<!--==================== Preloader Start ====================-->
+<div class="preloader">
+    <div class="loader"></div>
+</div>
+<!--==================== Preloader End ====================-->
+
+<!--==================== Sidebar Overlay End ====================-->
+<div class="side-overlay"></div>
+<!--==================== Sidebar Overlay End ====================-->
+
+<!-- ============================ Sidebar Start ============================ -->
+<aside class="sidebar">
+    <!-- sidebar close btn -->
+    <button type="button" class="sidebar-close-btn text-gray-500 hover-text-white hover-bg-main-600 text-md w-24 h-24 border border-gray-100 hover-border-main-600 d-xl-none d-flex flex-center rounded-circle position-absolute"><i class="ph ph-x"></i></button>
+    <!-- sidebar close btn -->
+    
+    <a href="/dashboard" class="sidebar__logo text-center p-20 position-sticky inset-block-start-0 bg-white w-100 z-1 pb-10">
+        <img src="assets/images/logopanjang.png" alt="Logo" style="width: 100px; height: auto;">
+    </a>
+
+    <div class="sidebar-menu-wrapper overflow-y-auto scroll-sm">
+        <div class="p-20 pt-10">
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu__item">
+                    <a href="/dashboard" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-squares-four"></i></span>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="/kelolapelanggan" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-users"></i></span>
+                        <span class="text">Kelola Pelanggan</span>
+                    </a>
+                </li> 
+                <li class="sidebar-menu__item">
+                    <a href="/kelolatransaksi" class="sidebar-menu__link">
+                        <span class="icon"><i class="ph ph-shopping-cart"></i></span>
+                        <span class="text">Kelola Transaksi</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu__item">
+                    <span class="text-gray-300 text-sm px-20 pt-20 fw-semibold border-top border-gray-100 d-block text-uppercase">Settings</span>
+                </li>
+                <li class="sidebar-menu__item">
+                    <a href="#" class="sidebar-menu__link" onclick="handleLogout()">
+                        <span class="icon"><i class="ph ph-sign-out"></i></span>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</aside>    
+<!-- ============================ Sidebar End  ============================ -->
+
+<div class="dashboard-main-wrapper">
+    <!-- Top Navbar -->
+    <div class="top-navbar flex-between gap-16">
+        <div class="flex-align gap-16">
+            <!-- Toggle Button Start -->
+            <button type="button" class="toggle-btn d-xl-none d-flex text-26 text-gray-500"><i class="ph ph-list"></i></button>
+            <!-- Toggle Button End -->
+            
+            <form action="#" class="w-350 d-sm-block d-none">
+                <div class="position-relative">
+                    <button type="submit" class="input-icon text-xl d-flex text-gray-100 pointer-event-none"><i class="ph ph-magnifying-glass"></i></button> 
+                    <input type="text" class="form-control ps-40 h-40 border-transparent focus-border-main-600 bg-main-50 rounded-pill placeholder-15" placeholder="Search...">
+                </div>
+            </form>
+        </div>
+
+        <div class="flex-align gap-16">
+            <div class="flex-align gap-8">
+                <!-- Notification Start -->
+                <div class="dropdown">
+                    <button id="notificationBtn" class="dropdown-btn shaking-animation text-gray-500 w-40 h-40 bg-main-50 hover-bg-main-100 transition-2 rounded-circle text-xl flex-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="position-relative">
+                            <i class="ph ph-bell"></i>
+                            <span id="notificationBadge" class="alarm-notify position-absolute end-0" style="display: none;"></span>
+                        </span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-lg p-12" id="notificationDropdown">
+                        <li>
+                            <h6 class="text-md mb-12 fw-medium border-bottom border-gray-100 pb-12">Notifikasi</h6>
+                        </li>
+                        <li id="noNotifications" style="display: none;">
+                            <div class="text-center py-3">
+                                <i class="ph ph-bell-slash text-gray-400 text-2xl mb-2"></i>
+                                <p class="text-gray-500 text-sm mb-0">Tidak ada notifikasi</p>
+                            </div>
+                        </li>
+                        <div id="notificationList">
+                            <!-- Notifications will be loaded here -->
+                        </div>
+                        <li class="border-top border-gray-100 pt-12 mt-12">
+                            <a href="/kelolatransaksi" class="text-center d-block text-sm text-main-600 hover-text-main-800">
+                                Lihat Semua Transaksi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Notification End -->
+            </div>
+
+            <!-- User Profile Start -->
+            <div class="dropdown">
+                <button class="users arrow-down-icon border border-gray-200 rounded-pill p-4 d-inline-block pe-40 position-relative" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="position-relative">
+                        <img src="assets/images/PP.png" alt="Image" class="h-32 w-32 rounded-circle">
+                        <span class="activation-badge w-8 h-8 position-absolute inset-block-end-0 inset-inline-end-0"></span>
+                    </span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-lg p-12">
+                    <li>
+                        <div class="flex-align gap-8 mb-12 pb-12 border-bottom border-gray-100">
+                            <img src="assets/images/PP.png" alt="image" class="w-40 h-40 rounded-circle">
+                            <div>
+                                <h6 class="text-md mb-0 fw-medium" id="usernameDisplay">Admin</h6>
+                                <span class="text-sm text-gray-600">Administrator</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a class="dropdown-link" href="#" onclick="handleLogout()"><span class="text">Logout</span></a></li>
+                </ul>
+            </div>
+            <!-- User Profile End -->
+        </div>
+    </div>
+
+    <div class="dashboard-body">
+        <!-- Breadcrumb Start -->
+        <div class="breadcrumb mb-24">
+            <ul class="flex-align gap-4">
+                <li><a href="/dashboard" class="text-gray-200 fw-normal text-15 hover-text-main-600">Home</a></li>
+                <li><span class="text-gray-500 fw-normal d-flex"><i class="ph ph-caret-right"></i></span></li>
+                <li><span class="text-main-600 fw-normal text-15">Dashboard</span></li>
+            </ul>
+        </div>
+        <!-- Breadcrumb End -->
+
+        <!-- Welcome Section -->
+        <div class="card mb-24">
+            <div class="card-body p-24">
+                <div class="row align-items-center">
+                    <div class="col-lg-8">
+                        <h4 class="mb-8">Selamat Datang di DiOlif Fashion Management System! 👋</h4>
+                        <p class="text-gray-600 mb-16">Kelola pelanggan dan transaksi seragam dengan mudah dan efisien.</p>
+                        <div class="flex-align gap-12">
+                            <a href="/kelolapelanggan" class="btn btn-main rounded-pill px-20 py-11">
+                                <i class="ph ph-users me-8"></i>
+                                Kelola Pelanggan
+                            </a>
+                            <a href="/kelolatransaksi" class="btn btn-outline-main rounded-pill px-20 py-11">
+                                <i class="ph ph-shopping-cart me-8"></i>
+                                Kelola Transaksi
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 text-end d-lg-block d-none">
+                        <img src="assets/images/banner.png" alt="Welcome" class="img-fluid" style="max-height: 200px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Stats Cards -->
+        <div class="row g-20 mb-24">
+            <div class="col-xxl-3 col-sm-6">
+                <div class="card p-20 radius-12 bg-main-50 border border-main-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-main-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-users"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Total Pelanggan</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8" id="totalCustomers">0</h4>
+                        <span class="text-gray-600 text-sm">Pelanggan terdaftar</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6">
+                <div class="card p-20 radius-12 bg-success-50 border border-success-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-success-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-check-circle"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Transaksi Lunas</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8" id="paidOrders">0</h4>
+                        <span class="text-gray-600 text-sm">Pembayaran selesai</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6">
+                <div class="card p-20 radius-12 bg-warning-50 border border-warning-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-warning-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-clock"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Pending Orders</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8" id="pendingOrders">0</h4>
+                        <span class="text-gray-600 text-sm">Menunggu pembayaran</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6">
+                <div class="card p-20 radius-12 bg-info-50 border border-info-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-info-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-currency-circle-dollar"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Total Revenue</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8" id="totalRevenue">Rp 0</h4>
+                        <span class="text-gray-600 text-sm">Pendapatan bulan ini</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert Cards untuk Overdue & Reminders -->
+        <div class="row g-20 mb-24" id="alertCardsContainer" style="display: none;">
+            <div class="col-xxl-3 col-sm-6" id="overduePaymentCard" style="display: none;">
+                <div class="card p-20 radius-12 bg-danger-50 border border-danger-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-danger-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-currency-circle-dollar"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Pembayaran Terlambat</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8 text-danger-600" id="overduePayments">0</h4>
+                        <span class="text-gray-600 text-sm">Transaksi terlambat bayar</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6" id="overdueTransactionCard" style="display: none;">
+                <div class="card p-20 radius-12 bg-warning-50 border border-warning-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-warning-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-clock"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Transaksi Terlambat</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8 text-warning-600" id="overdueTransactions">0</h4>
+                        <span class="text-gray-600 text-sm">Melewati target tanggal</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6" id="reminderPaymentCard" style="display: none;">
+                <div class="card p-20 radius-12 bg-info-50 border border-info-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-info-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-bell"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Reminder Bayar</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8 text-info-600" id="reminderPayments">0</h4>
+                        <span class="text-gray-600 text-sm">Mendekati deadline</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xxl-3 col-sm-6" id="reminderTransactionCard" style="display: none;">
+                <div class="card p-20 radius-12 bg-primary-50 border border-primary-100">
+                    <div class="card-body p-0">
+                        <div class="flex-between gap-8 mb-16">
+                            <div class="flex-align gap-16">
+                                <span class="w-40 h-40 bg-primary-600 rounded-circle flex-center text-white text-xl">
+                                    <i class="ph ph-wrench"></i>
+                                </span>
+                                <span class="text-gray-900 fw-medium text-lg">Reminder Kerjakan</span>
+                            </div>
+                        </div>
+                        <h4 class="mb-8 text-primary-600" id="reminderTransactions">0</h4>
+                        <span class="text-gray-600 text-sm">Segera dikerjakan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+            <div class="card-header border-bottom">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body p-20">
+                <div class="row g-16">
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="/tambahpelanggan" class="text-decoration-none">
+                            <div class="bg-main-50 rounded-12 p-20 text-center hover-bg-main-100 transition-3">
+                                <i class="ph ph-user-plus text-main-600 text-32 mb-12"></i>
+                                <h6 class="text-main-600 mb-4">Tambah Pelanggan</h6>
+                                <span class="text-gray-600 text-sm">Daftarkan pelanggan baru</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="/formpesanan" class="text-decoration-none">
+                            <div class="bg-success-50 rounded-12 p-20 text-center hover-bg-success-100 transition-3">
+                                <i class="ph ph-plus text-success-600 text-32 mb-12"></i>
+                                <h6 class="text-success-600 mb-4">Pesanan per Anak</h6>
+                                <span class="text-gray-600 text-sm">Buat pesanan per siswa</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="/formpesananperitem" class="text-decoration-none">
+                            <div class="bg-warning-50 rounded-12 p-20 text-center hover-bg-warning-100 transition-3">
+                                <i class="ph ph-package text-warning-600 text-32 mb-12"></i>
+                                <h6 class="text-warning-600 mb-4">Pesanan per Item</h6>
+                                <span class="text-gray-600 text-sm">Buat pesanan per produk</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-6">
+                        <a href="/kelolatransaksi" class="text-decoration-none">
+                            <div class="bg-info-50 rounded-12 p-20 text-center hover-bg-info-100 transition-3">
+                                <i class="ph ph-chart-bar text-info-600 text-32 mb-12"></i>
+                                <h6 class="text-info-600 mb-4">Laporan</h6>
+                                <span class="text-gray-600 text-sm">Lihat laporan transaksi</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="dashboard-footer">
+        <div class="flex-between flex-wrap gap-16">
+            <p class="text-gray-300 text-13 fw-normal"> &copy; Copyright DiOlif 2025, All Rights Reserved</p>
+            <div class="flex-align flex-wrap gap-16">
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">License</a>
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Documentation</a>
+                <a href="#" class="text-gray-300 text-13 fw-normal hover-text-main-600 hover-text-decoration-underline">Support</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery js -->
+<script src="assets/js/jquery-3.7.1.min.js"></script>
+<!-- Bootstrap Bundle Js -->
+<script src="assets/js/boostrap.bundle.min.js"></script>
+<!-- Phosphor Js -->
+<script src="assets/js/phosphor-icon.js"></script>
+<!-- main js -->
+<script src="assets/js/main.js"></script>
+
+<!-- Ganti bagian script dengan yang sudah diperbaiki: -->
+
+<script>
+    // Global variables
+    let dashboardStats = {};
+    let notifications = [];
+
+    // Check authentication
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAuthentication();
+        loadDashboardData();
+        displayUsername();
+        
+        // Auto refresh notifications every 5 minutes
+        setInterval(loadNotifications, 5 * 60 * 1000);
+    });
+
+    // Check if user is authenticated
+    function checkAuthentication() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn !== 'true') {
+            window.location.href = '/';
+            return;
+        }
+    }
+
+    // Display username
+    function displayUsername() {
+        const username = localStorage.getItem('username');
+        if (username) {
+            document.getElementById('usernameDisplay').textContent = username;
+        }
+    }
+
+    // Load enhanced dashboard data with better error handling
+    function loadDashboardData() {
+        console.log('Loading enhanced dashboard data...');
+        
+        // Load dashboard statistics dengan fallback
+        Promise.allSettled([
+            fetch('/api/dashboard/stats').then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                return res.json();
+            }),
+            fetch('/api/customers').then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                return res.json();
+            }),
+            fetch('/api/transactions/all').then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                return res.json();
+            })
+        ])
+        .then(([statsResult, customersResult, transactionsResult]) => {
+            // Handle stats
+            if (statsResult.status === 'fulfilled' && statsResult.value.success) {
+                const stats = statsResult.value.data;
+                dashboardStats = stats;
+                
+                // Update basic stats
+                document.getElementById('paidOrders').textContent = stats.paid_orders || 0;
+                document.getElementById('pendingOrders').textContent = stats.pending_orders || 0;
+                
+                // Update alert cards
+                updateAlertCards(stats);
+            } else {
+                console.error('Failed to load stats:', statsResult.reason);
+                // Set default values
+                document.getElementById('paidOrders').textContent = '0';
+                document.getElementById('pendingOrders').textContent = '0';
+            }
+
+            // Handle customers
+            if (customersResult.status === 'fulfilled') {
+                const customers = customersResult.value;
+                document.getElementById('totalCustomers').textContent = customers.length || 0;
+            } else {
+                console.error('Failed to load customers:', customersResult.reason);
+                document.getElementById('totalCustomers').textContent = '0';
+            }
+
+            // Handle transactions
+            if (transactionsResult.status === 'fulfilled') {
+                const transactions = transactionsResult.value;
+                // Calculate total revenue (paid transactions only)
+                const totalRevenue = transactions
+                    .filter(t => t.status === 'paid')
+                    .reduce((sum, t) => sum + (parseFloat(t.total_price) || 0), 0);
+                
+                document.getElementById('totalRevenue').textContent = 'Rp ' + formatCurrency(totalRevenue);
+            } else {
+                console.error('Failed to load transactions:', transactionsResult.reason);
+                document.getElementById('totalRevenue').textContent = 'Rp 0';
+            }
+            
+            // Load notifications
+            loadNotifications();
+        })
+        .catch(err => {
+            console.error('Error in loadDashboardData:', err);
+            showAlert('Sebagian data dashboard gagal dimuat', 'warning');
+        });
+    }
+
+    // Update alert cards visibility and values
+    function updateAlertCards(stats) {
+        const alertContainer = document.getElementById('alertCardsContainer');
+        let hasAlerts = false;
+
+        // Overdue Payments
+        if (stats.overdue_payments > 0) {
+            document.getElementById('overduePayments').textContent = stats.overdue_payments;
+            document.getElementById('overduePaymentCard').style.display = 'block';
+            hasAlerts = true;
+        } else {
+            document.getElementById('overduePaymentCard').style.display = 'none';
+        }
+
+        // Overdue Transactions
+        if (stats.overdue_transactions > 0) {
+            document.getElementById('overdueTransactions').textContent = stats.overdue_transactions;
+            document.getElementById('overdueTransactionCard').style.display = 'block';
+            hasAlerts = true;
+        } else {
+            document.getElementById('overdueTransactionCard').style.display = 'none';
+        }
+
+        // Reminder Payments
+        if (stats.reminder_payments > 0) {
+            document.getElementById('reminderPayments').textContent = stats.reminder_payments;
+            document.getElementById('reminderPaymentCard').style.display = 'block';
+            hasAlerts = true;
+        } else {
+            document.getElementById('reminderPaymentCard').style.display = 'none';
+        }
+
+        // Reminder Transactions
+        if (stats.reminder_transactions > 0) {
+            document.getElementById('reminderTransactions').textContent = stats.reminder_transactions;
+            document.getElementById('reminderTransactionCard').style.display = 'block';
+            hasAlerts = true;
+        } else {
+            document.getElementById('reminderTransactionCard').style.display = 'none';
+        }
+
+        // Show/hide alert container
+        alertContainer.style.display = hasAlerts ? 'block' : 'none';
+    }
+
+    // Load notifications dengan error handling
+    function loadNotifications() {
+        fetch('/api/dashboard/notifications')
+            .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+                return res.json();
+            })
+            .then(response => {
+                if (response.success && response.data) {
+                    notifications = response.data.notifications;
+                    updateNotificationUI(response.data);
+                } else {
+                    console.error('Invalid notifications response:', response);
+                    updateNotificationUI({ notifications: [], has_notifications: false });
+                }
+            })
+            .catch(err => {
+                console.error('Error loading notifications:', err);
+                // Show empty notifications
+                updateNotificationUI({ notifications: [], has_notifications: false });
+            });
+    }
+
+    // Update notification UI
+    function updateNotificationUI(data) {
+        const notificationBadge = document.getElementById('notificationBadge');
+        const notificationList = document.getElementById('notificationList');
+        const noNotifications = document.getElementById('noNotifications');
+        const notificationBtn = document.getElementById('notificationBtn');
+
+        // Update badge
+        if (data.has_notifications) {
+            notificationBadge.style.display = 'block';
+            notificationBtn.classList.add('shaking-animation');
+        } else {
+            notificationBadge.style.display = 'none';
+            notificationBtn.classList.remove('shaking-animation');
+        }
+
+        // Clear notification list
+        notificationList.innerHTML = '';
+
+        // Show/hide no notifications message
+        if (!data.notifications || data.notifications.length === 0) {
+            noNotifications.style.display = 'block';
+        } else {
+            noNotifications.style.display = 'none';
+            
+            // Add notifications
+            data.notifications.forEach(notification => {
+                const notificationItem = createNotificationItem(notification);
+                notificationList.appendChild(notificationItem);
+            });
+        }
+    }
+
+    // Create notification item element
+    function createNotificationItem(notification) {
+        const li = document.createElement('li');
+        li.className = 'mb-12';
+        
+        const colorClass = getNotificationColorClass(notification.color);
+        
+        li.innerHTML = `
+            <a href="${notification.action_url}" class="text-decoration-none">
+                <div class="flex-align gap-12 p-8 rounded-8 hover-bg-gray-50 transition-3">
+                    <span class="w-32 h-32 ${colorClass} rounded-circle flex-center text-white text-sm">
+                        <i class="${notification.icon}"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                        <h6 class="text-sm mb-4 fw-medium text-gray-900">${notification.title}</h6>
+                        <p class="text-xs text-gray-600 mb-0">${notification.message}</p>
+                        <span class="text-xs text-gray-400">${formatNotificationTime(notification.created_at)}</span>
+                    </div>
+                    <span class="w-20 h-20 bg-main-600 rounded-circle flex-center text-white text-xs fw-bold">
+                        ${notification.count}
+                    </span>
+                </div>
+            </a>
+        `;
+        
+        return li;
+    }
+
+    // Get notification color class
+    function getNotificationColorClass(color) {
+        const colorMap = {
+            'danger': 'bg-danger-600',
+            'warning': 'bg-warning-600',
+            'info': 'bg-info-600',
+            'primary': 'bg-primary-600',
+            'success': 'bg-success-600'
+        };
+        return colorMap[color] || 'bg-gray-600';
+    }
+
+    // Format notification time
+    function formatNotificationTime(timeString) {
+        const time = new Date(timeString);
+        const now = new Date();
+        const diffMs = now - time;
+        const diffMins = Math.floor(diffMs / 60000);
+        
+        if (diffMins < 1) return 'Baru saja';
+        if (diffMins < 60) return `${diffMins} menit lalu`;
+        
+        const diffHours = Math.floor(diffMins / 60);
+        if (diffHours < 24) return `${diffHours} jam lalu`;
+        
+        const diffDays = Math.floor(diffHours / 24);
+        return `${diffDays} hari lalu`;
+    }
+
+    // Format currency (existing function)
+    function formatCurrency(amount) {
+        if (!amount || amount === 0) return '0';
+        return parseInt(amount).toLocaleString('id-ID');
+    }
+
+    // Show alert (add if not exists)
+    function showAlert(message, type) {
+        // Remove existing alerts
+        const existingAlerts = document.querySelectorAll('.alert-custom');
+        existingAlerts.forEach(alert => alert.remove());
+        
+        // Create alert element
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show position-fixed alert-custom`;
+        alertDiv.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+        alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+        `;
+        
+        document.body.appendChild(alertDiv);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            if (alertDiv && alertDiv.parentNode) {
+                alertDiv.parentNode.removeChild(alertDiv);
+            }
+        }, 5000);
+    }
+
+    // Handle logout (existing function)
+    function handleLogout() {
+        if (confirm('Yakin ingin logout?')) {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '/';
+        }
+    }
+</script>
+</body>
+</html>
